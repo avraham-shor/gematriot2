@@ -1,0 +1,15 @@
+header {
+    font-size: 10rem;
+    font-style: italic;
+    margin-top: -48px;
+    background-color: aqua;
+    color: red;
+    text-align: center;
+    text-shadow: 5px -6px black;
+}
+
+.descriptipon {
+    font-size: 2rem;
+    text-align: center;
+    padding-bottom: 15px;
+}

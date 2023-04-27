@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gematrya</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <header>
+        גימטריאות
+    </header>
+    <div class="descriptipon">
+        .הכנס מילה או כמה מילים כדי לראות את הגימטריה והיכן יש גימטריה דומה בתנ"ך
+    </div>
+    <div>
+        <input type="text" id="chars" oninput="setGematrya(value)" style="font-size: 5rem; width: 100%;">
+    </div>
+    <div>
+        <h1 id="sum" style="font-size: 5rem;"></h1>
+        <h1>:מילים שחיפשת בעבר</h1>
+        <h1 id="history" style="font-size: 3rem;"></h1>
+        <div>
+            <table border="1" id="table">
+                <tr>
+                    <th>מקורם בתורה</th>
+                    <th>מילים בתורה עם אותה גימטריה</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="configuration.js"></script>
+    <script src="gematriot.js"></script>
+    <script src="index.js"></script>
+
+</body>
+
+</html>
