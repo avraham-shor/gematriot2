@@ -21,7 +21,12 @@ Object.keys(VAL).forEach(function (key) {
 
 const gemOfTorah = {};
 const arrayOfObjects = [];
-getChumashimAndPrintFile(0);
+
+for (let i = 0; i < 10; i++) {
+    const min = i * 300
+    getChumashimAndPrintFile(0, min);
+}
+
 
 // setTimeout(() => {
 //     writeAFile()
@@ -53,7 +58,7 @@ function writeAFile() {
 //     // }
 // }
 
-function getChumashimAndPrintFile(index) {
+function getChumashimAndPrintFile(index, min) {
     if (index >= CHUMASHIM.length) {
         setTimeout(() => {
                 writeAFile()
@@ -72,7 +77,7 @@ function getChumashimAndPrintFile(index) {
             });
         }
         setTimeout(() => {
-            getChumashimAndPrintFile(index + 1)
+            getChumashimAndPrintFile(index + 1, min)
             }, 500 * range);
 }
 
@@ -80,7 +85,7 @@ function getChumashimAndPrintFile(index) {
 
 
 
-function setListOfNumbersInTora(gemOfTorah, perek) {
+function setListOfNumbersInTora(gemOfTorah, perek, min) {
     if (perek.he) {
         console.log(perek.he.length);
         perekLength = perek.he.length * 22;
@@ -94,7 +99,7 @@ function setListOfNumbersInTora(gemOfTorah, perek) {
                     if (words.length) {
                         let word = words.join(' ');
                         word = clean(word);
-                        if (inRange(calculate(word))) {
+                        if (inRange(calculate(word)), min) {
                             let entirePasuk = clean(pasuk).split(word);
                             const pasukWithSource = [entirePasuk[0], word, entirePasuk[1], perek.heRef + sourcePasuk];
                             if (!gemOfTorah[calculate(word)]) {
@@ -140,8 +145,7 @@ function clean(word) {
     }
 }
 
-function inRange(gematria) {
-    let min = 2800;
+function inRange(gematria, min) {
     let max = min + 200;
     nameOfFile = "gematriot-tora-" + min + "-" + max + ".js";
     nameOfObject = "const tora_" + min + "_" + max + " = ";
