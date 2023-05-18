@@ -1,4 +1,4 @@
-let gemOfTorah = gemObject;
+let gemOfTorah = tora_0_300;
 
 
 // console.log(gemObject);
@@ -45,7 +45,7 @@ function setGematrya(value) {
         document.getElementById('history').innerText = ' אין מילים שמתאימות לגימטריא זו';
     }
     let cleanValue = clean(value);
-    if (sum > 0 && value.length > 1) history.push(cleanValue);
+    if (sum > 0 && value.length > 1) history.push(cleanValue + " ");
     // console.log('history:', history);
     localStorage.setItem('history', history.join('%%'));
 
@@ -98,9 +98,11 @@ function addToTheTable(sum) {
         tableRef.deleteRow(1);
     }
     if (torahValues && torahValues.length) {
-        torahValues.forEach((dict) => {
-            const word = Object.keys(dict)[0];
-            const value = dict[word];
+        torahValues.forEach((arr) => {
+            console.log(arr);
+           
+            const pasuk = arr[0] + arr[1]  +arr[2];
+            const value = arr[3];
 
             let newRow = tableRef.insertRow(-1);
 
@@ -108,11 +110,20 @@ function addToTheTable(sum) {
             let wordCell = newRow.insertCell(1);
 
 
-            let sourceText = document.createTextNode(value);
-            let wordText = document.createTextNode(word);
+            let sourceText = document.createTextNode(pasuk);
+            let wordText = document.createTextNode(value);
 
             sourceCell.appendChild(sourceText);
             wordCell.appendChild(wordText);
+
+
+            //from chat GPT
+            // let wordSpan = document.createElement("span"); // Create a <span> element
+            // wordSpan.style.backgroundColor = "yellow"; // Set yellow background color
+            // wordSpan.textContent = value; // Set the text content of the <span>
+
+            // sourceCell.appendChild(sourceText);
+            // wordCell.appendChild(wordSpan); // Append the <span> element to the cell
 
         });
     }
