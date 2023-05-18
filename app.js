@@ -14,17 +14,29 @@ let nameOfFile = "gematriot-tora-200.json";
 
 let nameOfObject;
 
+
+
 Object.keys(VAL).forEach(function (key) {
     VAL_OBVERSE[VAL[key]] = key;
     VAL_OBVERSE[0] = '';
 });
 
-const gemOfTorah = {};
+let gemOfTorah = {};
 const arrayOfObjects = [];
+// getChumashimAndPrintFile(0, 0);
 
-for (let i = 0; i < 10; i++) {
-    const min = i * 300
+main(6000);
+
+function main(min) {
+    
     getChumashimAndPrintFile(0, min);
+    gemOfTorah = {};
+    // if (min < 14000) {
+    //     setTimeout(() => {
+    //         main(min + 2000)
+    //     }, 100000);
+    //     return;
+    // }
 }
 
 
@@ -48,7 +60,7 @@ function writeAFile() {
 // for (let i = 0; i < CHUMASHIM.length; i++) {
 //     const chumash = CHUMASHIM[i];
 //     console.log(chumash);
-    
+
 //     console.log(CHUMASH);
 //     // const range = chumash[CHUMASH]
 //     // for (let i = 0; i <= range; i++) {
@@ -61,36 +73,39 @@ function writeAFile() {
 function getChumashimAndPrintFile(index, min) {
     if (index >= CHUMASHIM.length) {
         setTimeout(() => {
-                writeAFile()
-            }, 6000);
-            return;
+            writeAFile()
+        }, 6000);
+        return;
     }
     const chumash = CHUMASHIM[index];
     console.log('chumash', chumash);
     const CHUMASH = Object.keys(chumash)[0];
     const range = chumash[CHUMASH];
     for (let i = 0; i <= range; i++) {
-            axios.get(BASE_URL + CHUMASH + i + PARAMS).then(resp => {
-                setTimeout(() => {
-                setListOfNumbersInTora(gemOfTorah, resp.data);
+        axios.get(BASE_URL + CHUMASH + i + PARAMS).then(resp => {
+            setTimeout(() => {
+                setListOfNumbersInTora(gemOfTorah, resp.data, min);
             }, perekLength);
-            });
-        }
-        setTimeout(() => {
-            getChumashimAndPrintFile(index + 1, min)
-            }, 500 * range);
+        });
+    }
+    setTimeout(() => {
+        getChumashimAndPrintFile(index + 1, min)
+    }, 500 * range);
 }
 
-    
+
 
 
 
 function setListOfNumbersInTora(gemOfTorah, perek, min) {
     if (perek.he) {
-        console.log(perek.he.length);
+        console.log(perek.he.length, min);
         perekLength = perek.he.length * 22;
         perek.he.forEach((pasuk, index) => {
             // console.log(e, index);
+            // console.log(1, pasuk);
+            pasuk = clean(pasuk);
+            // console.log(2, pasuk);
             const sourcePasuk = addIndexPasuk(index + 1);
             wordsOfPasuk = pasuk.split(' ');
             for (let i = 0; i < wordsOfPasuk.length; i++) {
@@ -98,9 +113,8 @@ function setListOfNumbersInTora(gemOfTorah, perek, min) {
                     let words = wordsOfPasuk.slice(i, j);
                     if (words.length) {
                         let word = words.join(' ');
-                        word = clean(word);
-                        if (inRange(calculate(word)), min) {
-                            let entirePasuk = clean(pasuk).split(word);
+                        if (inRange(calculate(word), min)) {
+                            let entirePasuk = pasuk.split(word);
                             const pasukWithSource = [entirePasuk[0], word, entirePasuk[1], perek.heRef + sourcePasuk];
                             if (!gemOfTorah[calculate(word)]) {
                                 gemOfTorah[calculate(word)] = [];
@@ -111,9 +125,9 @@ function setListOfNumbersInTora(gemOfTorah, perek, min) {
                             if (!gemOfTorah[calculate(word)].filter(pasuk => rejects(pasuk[1]) == wordWithoutNikud).length) {
                                 gemOfTorah[calculate(word)].push(pasukWithSource);
                             }
-                            
+
                         }
-                        
+
                     }
                 }
             }
@@ -126,7 +140,7 @@ function addIndexPasuk(index) {
     const tens = index % 100 - some;
     const hundreds = index - tens - some;
     return ' ' + VAL_OBVERSE[hundreds] + VAL_OBVERSE[tens] + VAL_OBVERSE[some].replace('טז', 'יו').replace('טו', 'יה');
-    
+
 }
 
 function calculate(value) {
@@ -141,23 +155,27 @@ function rejects(word) {
 
 function clean(word) {
     if (typeof word == typeof "") {
-        return word.replace(/[a-z]|[0-9]|<|>|-|"|=|/g, "").replace("{ס}", "").replace("{פ}", "").replace("/", "").replace("|", "");
+        const twoOrMoreSpaces = /\s+/g;
+        const betweenTwoHalfBrackets = /\([^)]*\)|\[[^\]]*\]/g;
+        return word.replace(/[a-z]|[0-9]|<|>|-|"|=|/g, "").replace("{ס}", "").replace("{פ}", "")
+        .replace(betweenTwoHalfBrackets, "").replace("//", "").replace("|", "").replace("*", "").replace("/", "").replace(twoOrMoreSpaces, " ");
     }
 }
 
 function inRange(gematria, min) {
-    let max = min + 200;
+    let max = min + 100000;
     nameOfFile = "gematriot-tora-" + min + "-" + max + ".js";
     nameOfObject = "const tora_" + min + "_" + max + " = ";
+    // console.log(gematria, min, max, gematria >= min && gematria < max);
     return gematria >= min && gematria < max;
 }
 
 function switchObject(result) {
     for (let i = 1; i < 2000; i = i + 100) {
         if (result < i) {
-           return arrayOfObjects[i]; 
+            return arrayOfObjects[i];
         }
-        
+
     }
 }
 
