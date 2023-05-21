@@ -2,7 +2,8 @@
 
 let gemOfTorah = tora_0_300;
 
-console.log(JSON.stringify(objTora, null, 4));
+// console.log(JSON.stringify(objTora, null, 4));
+
 // console.log(gemObject);
 // gemObject.forEach(n => {
 //     console.log(n);
@@ -37,6 +38,7 @@ console.log(JSON.stringify(objTora, null, 4));
 
 
 function setGematrya(value) {
+    setListOfSameInTora(objTora, value);
     let history = [];
     const sum = calculate(value);
     switchObject(sum);
@@ -139,7 +141,20 @@ function clean(word) {
     }
 }
 
-function setListOfNumbersInTora(obj) {
+function setListOfSameInTora(obj, value) {
+    for (const [k, v] of Object.entries(obj)) {
+        const sourcePerek = k;
+        v.forEach(pasuk => {
+            //console.log(pasuk);
+           if (rejects(pasuk).includes(value)) {
+                console.log(pasuk);
+           }
+        });
+
+        //console.log(`${key}: ${value}`);
+      }
+      console.log('\t\t\t\t\t\t\t');
+      return;
     if (perek.he) {
         console.log(perek.he.length, min);
         perekLength = perek.he.length * 22;

@@ -25,7 +25,7 @@ let gemOfTorah = {};
 const arrayOfObjects = [];
 // getChumashimAndPrintFile(0, 0);
 
-main(6000);
+main(900);
 
 function main(min) {
     
@@ -135,6 +135,7 @@ function setListOfNumbersInTora(gemOfTorah, perek, min) {
     }
 }
 
+
 function addIndexPasuk(index) {
     const some = index % 10;
     const tens = index % 100 - some;
@@ -163,7 +164,7 @@ function clean(word) {
 }
 
 function inRange(gematria, min) {
-    let max = min + 100000;
+    let max = min + 300;
     nameOfFile = "gematriot-tora-" + min + "-" + max + ".js";
     nameOfObject = "const tora_" + min + "_" + max + " = ";
     // console.log(gematria, min, max, gematria >= min && gematria < max);
