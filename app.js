@@ -158,8 +158,8 @@ function clean(word) {
     if (typeof word == typeof "") {
         const twoOrMoreSpaces = /\s+/g;
         const betweenTwoHalfBrackets = /\([^)]*\)|\[[^\]]*\]/g;
-        return word.replace(/[a-z]|[0-9]|<|>|-|"|=|/g, "").replace("{ס}", "").replace("{פ}", "")
-        .replace(betweenTwoHalfBrackets, "").replace("//", "").replace("|", "").replace("*", "").replace("/", "").replace(twoOrMoreSpaces, " ");
+        return word.replace(/[a-z]|[0-9]|<|>|-|"|=|/g, "").replaceAll("{ס}", "").replaceAll("{פ}", "")
+        .replace(betweenTwoHalfBrackets, "").replaceAll("/", "").replaceAll("|", "").replaceAll("*", "").replaceAll(twoOrMoreSpaces, " ");
     }
 }
 
