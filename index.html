@@ -17,13 +17,13 @@
      הכנס מילה או כמה מילים כדי לראות את הגימטריה ולראות היכן זה כתוב בתורה וכן למצוא היכן יש גימטריה דומה בתנ"ך.
     </div>
     <div>
-        <input type="text" id="chars" oninput="setGematrya(value)" style="font-size: 5rem; width: 100%;">
+        <input type="text" id="chars"  oninput="setGematrya(value)" class="input">
     </div>
     <div>
         <h1 id="sum" style="font-size: 5rem;"></h1>
-        <h1>מילים שחיפשת בעבר עם אותה גימטריה:</h1>
+        <h1 class="descriptipon">מילים שחיפשת בעבר עם אותה גימטריה:</h1>
         <h1 id="history" style="font-size: 3rem;"></h1>
-        <div>
+        <div class="table-box">
             <table border="1" id="the-value">
                 <tr>
                     <th>מקורם בתורה</th>
@@ -31,16 +31,20 @@
                 </tr>
                 <tr>
                     <td>אין מקורות</td>
-                    <td>אין פסוקים</td>
+                    <td class="pesukim">אין פסוקים</td>
                 </tr>
             </table>
         </div>
 <br><br><br>
-        <div>
+        <div class="table-box">
             <table border="1" id="the-same">
                 <tr>
                     <th>מקורם בתורה</th>
                     <th>המילים האלו כתובים בתורה כאן</th>
+                </tr>
+                <tr>
+                    <td>אין מקורות</td>
+                    <td class="pesukim">אין פסוקים</td>
                 </tr>
             </table>
         </div>

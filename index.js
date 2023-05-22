@@ -94,6 +94,8 @@ function addToTheTable(sum) {
             let sourceCell = newRow.insertCell(0);
             let pasukCell = newRow.insertCell(1);
 
+            pasukCell.classList.add("pesukim");
+
             let sourceText = document.createTextNode(source);
             let pasukText1 = document.createTextNode(arr[0]);
             let pasukText2 = document.createTextNode(arr[2]);
@@ -137,14 +139,9 @@ function setListOfSameInTora(obj, value) {
     const listOfSamePesukim = [];
     for (const [k, v] of Object.entries(obj)) {
         const sourcePerek = k;
-        v.forEach(pasuk => {
-            if (pasuk.includes("־")) {
-                console.log(pasuk);
-                pasuk = pasuk.replaceAll("־", " ");
-                console.log(pasuk);
-            }
+        v.forEach((pasuk, index) => {
+            pasuk = pasuk.replaceAll("־", " ");
 
-            
             if (rejects(pasuk).includes(value)) {
                 const mainWords = [];
                 const wordsOfPasuk = pasuk.split(" ");
@@ -161,7 +158,7 @@ function setListOfSameInTora(obj, value) {
                     const arr = pasuk.split(mainWordsJoined);
                     const rightOfPasuk = arr[0];
                     const leftOfPasuk = arr[1];
-                    listOfSamePesukim.push([rightOfPasuk, mainWordsJoined, leftOfPasuk, sourcePerek]);
+                    listOfSamePesukim.push([rightOfPasuk, mainWordsJoined, leftOfPasuk, sourcePerek + addIndexPasuk(index + 1)]);
                 }
 
             }
@@ -248,6 +245,8 @@ function fillTable(listOfSamePesukim) {
 
         let sourceCell = newRow.insertCell(0);
         let pasukCell = newRow.insertCell(1);
+
+        pasukCell.classList.add("pesukim");
 
         let sourceText = document.createTextNode(arrayOfPasuk[3]);
         let pasukText1 = document.createTextNode(arrayOfPasuk[0]);
