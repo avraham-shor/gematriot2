@@ -3,10 +3,10 @@ const arrayOfObjects = [];
 const vals = [50, 96598, 500, 3000, 5500];
 
 vals.forEach(element => {
-    const object = {};
-    object[element] = 'num: ' +element;
-    console.log(object);
-    switchObject(element, object);
+    console.log(element);
+    if (element == 500) {
+        return;
+    }
 });
 
 console.log(arrayOfObjects);

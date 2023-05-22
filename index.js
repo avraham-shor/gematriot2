@@ -103,14 +103,6 @@ function addToTheTable(sum) {
             pasukCell.appendChild(wordSpan);
             pasukCell.appendChild(pasukText2);
 
-            //from chat GPT
-            //  // Create a <span> element
-            //  // Set yellow background color
-            //  value; // Set the text content of the <span>
-
-            // sourceCell.appendChild(sourceText);
-            // wordCell.appendChild(wordSpan); // Append the <span> element to the cell
-
         });
     }
 
@@ -142,54 +134,37 @@ function clean(word) {
 }
 
 function setListOfSameInTora(obj, value) {
+    const listOfSamePesukim = [];
     for (const [k, v] of Object.entries(obj)) {
         const sourcePerek = k;
         v.forEach(pasuk => {
-            //console.log(pasuk);
-           if (rejects(pasuk).includes(value)) {
-                console.log(pasuk);
-           }
-        });
-
-        //console.log(`${key}: ${value}`);
-      }
-      console.log('\t\t\t\t\t\t\t');
-      return;
-    if (perek.he) {
-        console.log(perek.he.length, min);
-        perekLength = perek.he.length * 22;
-        perek.he.forEach((pasuk, index) => {
-            // console.log(e, index);
-            // console.log(1, pasuk);
-            pasuk = clean(pasuk);
-            // console.log(2, pasuk);
-            const sourcePasuk = addIndexPasuk(index + 1);
-            wordsOfPasuk = pasuk.split(' ');
-            for (let i = 0; i < wordsOfPasuk.length; i++) {
-                for (let j = i + 1; j <= wordsOfPasuk.length; j++) {
-                    let words = wordsOfPasuk.slice(i, j);
-                    if (words.length) {
-                        let word = words.join(' ');
-                        if (inRange(calculate(word), min)) {
-                            let entirePasuk = pasuk.split(word);
-                            const pasukWithSource = [entirePasuk[0], word, entirePasuk[1], perek.heRef + sourcePasuk];
-                            if (!gemOfTorah[calculate(word)]) {
-                                gemOfTorah[calculate(word)] = [];
-                            }
-                            // console.log('word:', word, rejects(word) );
-                            wordWithoutNikud = rejects(word);
-                            //gemOfTorah[calculate(word)] = ;
-                            if (!gemOfTorah[calculate(word)].filter(pasuk => rejects(pasuk[1]) == wordWithoutNikud).length) {
-                                gemOfTorah[calculate(word)].push(pasukWithSource);
-                            }
-
-                        }
-
+            if (rejects(pasuk).includes(value)) {
+                const mainWords = [];
+                const wordsOfPasuk = pasuk.split(" ");
+                for (let i = 0; i < wordsOfPasuk.length; i++) {
+                    const word = wordsOfPasuk[i];
+                    //check which words in the Pasuk are the same text
+                    if (value.includes(rejects(word))) {
+                        mainWords.push(word);
                     }
+                    else if (mainWords.length) break;
                 }
+                if (mainWords.length) {
+                    const mainWordsJoined = mainWords.join(" ");
+                    const arr = pasuk.split(mainWordsJoined);
+                    const rightOfPasuk = arr[0];
+                    const leftOfPasuk = arr[1];
+                    listOfSamePesukim.push([rightOfPasuk, mainWordsJoined, leftOfPasuk, sourcePerek]);
+                }
+
             }
         });
     }
+
+    if (listOfSamePesukim.length) {
+        fillTable(listOfSamePesukim);
+    }
+
 }
 
 function switchObject(sum) {
@@ -242,4 +217,39 @@ function inRange(sum) {
         return end
     }
     return sum - sum % 600;
+}
+
+
+function fillTable(listOfSamePesukim) {
+
+    let tableTheSame = document.getElementById("the-same");
+    while (tableTheSame.rows.length > 1) {
+        tableTheSame.deleteRow(1);
+    }
+    listOfSamePesukim.forEach(arrayOfPasuk => {
+
+        //console.log(arrayOfPasuk);
+
+        const wordSpan = document.createElement("span");
+        wordSpan.style.backgroundColor = "yellow";
+        wordSpan.textContent = arrayOfPasuk[1];
+
+
+
+
+        let newRow = tableTheSame.insertRow(-1);
+
+        let sourceCell = newRow.insertCell(0);
+        let pasukCell = newRow.insertCell(1);
+
+        let sourceText = document.createTextNode(arrayOfPasuk[3]);
+        let pasukText1 = document.createTextNode(arrayOfPasuk[0]);
+        let pasukText2 = document.createTextNode(arrayOfPasuk[2]);
+
+        sourceCell.appendChild(sourceText);
+        pasukCell.appendChild(pasukText1);
+        pasukCell.appendChild(wordSpan);
+        pasukCell.appendChild(pasukText2);
+    });
+
 }
