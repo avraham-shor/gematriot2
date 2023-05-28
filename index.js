@@ -39,7 +39,6 @@ let gemOfTorah = tora_0_300;
 
 function setGematrya() {
     const value = document.getElementById("chars").value;
-    debugger;
     setListOfSameInTora(objTora, value);
     let history = [];
     const sum = calculate(value);
