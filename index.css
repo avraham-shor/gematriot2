@@ -86,10 +86,24 @@ table {
 
 .button-9:active {
     box-shadow: rgba(18, 18, 92, 0.1) 0 0 0 1px inset, rgba(42, 42, 146, 0.2) 0 6px 15px 0, rgba(170, 51, 51, 0.1) 0 2px 2px 0, rgba(112, 169, 202, 0.3) 0 0 0 4px;
-    color: #bfc5e7;
+    color: #091663;
+    background-color: #4d8de0;
   }
 
 .pesukim {
     text-align: right;
     padding-right: 2vw;
+}
+
+.buttons-box {
+    display: flex;
+    justify-content: space-between;
+    width: 80vw;
+    margin-right: 10vw;
+}
+
+.with25 {
+    width: 25vw;
+    font-size: 3rem;
+
 }

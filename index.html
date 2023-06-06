@@ -17,18 +17,23 @@
      הכנס מילה או כמה מילים כדי לראות את הגימטריה ולראות היכן זה כתוב בתורה וכן למצוא היכן יש גימטריה דומה בתנ"ך.
     </div>
     <div>
-        <input type="text" id="chars" class="input">
-        <button class="button-9" role="button" onclick="setGematrya(value)">חיפוש</button>
+        <input type="text" id="chars" placeholder="הכנס כאן את המילה / מילים" class="input">
+    </div>
+    <div class="buttons-box">
+        <button class="button-9 with25" role="button" onclick="setOption(1)">הגימטריא בתנ"ך </button>
+        <button class="button-9 with25" role="button" onclick="setOption(2)"> המילים בתנ"ך </button>
+        <button class="button-9 with25" role="button" onclick="setOption(3)" >פסוקים לשמות אנשים </button>
+
     </div>
     <div>
         <h1 id="sum" style="font-size: 5rem;"></h1>
         <h1 class="descriptipon">מילים שחיפשת בעבר עם אותה גימטריה:</h1>
         <h1 id="history" style="font-size: 3rem;"></h1>
         <div class="table-box">
-            <table border="1" id="the-value">
+            <table border="1" id="table">
                 <tr>
                     <th>מקורם בתורה</th>
-                    <th>מילים בתורה עם אותה גימטריה</th>
+                    <th id="subject"></th>
                 </tr>
                 <tr>
                     <td>אין מקורות</td>
@@ -36,19 +41,7 @@
                 </tr>
             </table>
         </div>
-<br><br><br>
-        <div class="table-box">
-            <table border="1" id="the-same">
-                <tr>
-                    <th>מקורם בתורה</th>
-                    <th>המילים האלו כתובים בתורה כאן</th>
-                </tr>
-                <tr>
-                    <td>אין מקורות</td>
-                    <td class="pesukim">אין פסוקים</td>
-                </tr>
-            </table>
-        </div>
+
     </div>
     <script src="gematriot-tora.js"></script>
     <script src="gematriot-tora-0-300.js"></script>

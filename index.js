@@ -1,6 +1,7 @@
 
 
 let gemOfTorah = tora_0_300;
+let option = 1;
 
 // console.log(JSON.stringify(objTora, null, 4));
 
@@ -35,11 +36,26 @@ let gemOfTorah = tora_0_300;
 //         });
 //     }
 // })
-
-
-function setGematrya() {
+function main() {
     const value = document.getElementById("chars").value;
-    setListOfSameInTora(objTora, value);
+    switch (option) {
+        case 1:
+            setGematrya(value)
+            break;
+        case 2:
+            setListOfSameInTora(objTora, value);
+            break;
+        case 3:
+            setPesukimForPeopleNames(objTora, value)
+            break;
+        default:
+            setGematrya(value)
+            break;
+    }
+}
+
+
+function setGematrya(value) {
     let history = [];
     const sum = calculate(value);
     switchObject(sum);
@@ -56,8 +72,11 @@ function setGematrya() {
     localStorage.setItem('history', history.join('%%'));
 
     addToTheTable(sum);
+}
 
-
+function setOption(value) {
+    option = value;
+    main();
 }
 
 
@@ -73,11 +92,12 @@ function addIndexPasuk(index) {
 
 function addToTheTable(sum) {
     torahValues = gemOfTorah[sum];
-    let tableRef = document.getElementById("the-value");
+    let tableRef = document.getElementById("table");
     while (tableRef.rows.length > 1) {
         tableRef.deleteRow(1);
     }
     if (torahValues && torahValues.length) {
+        document.getElementById("subject").innerText = "מילים בתורה עם אותה גימטריה";
         torahValues.forEach((arr) => {
 
             const mainOfPasuk = arr[1];
@@ -87,9 +107,6 @@ function addToTheTable(sum) {
             wordSpan.textContent = mainOfPasuk;
 
             const source = arr[3];
-
-
-
             let newRow = tableRef.insertRow(-1);
 
             let sourceCell = newRow.insertCell(0);
@@ -122,16 +139,13 @@ async function getTora(url) {
 }
 
 function rejects(word) {
-    // console.log('word-1:', word, typeof word == typeof "");
     if (typeof word == typeof "") {
         return word.split('').map(c => c.match(/[א-ת]/) ? c.match(/[א-ת]/)[0] : '').join('');
     }
-    // word.match(/[^t]/);//    .replace('/^[a-z]/','1');
 }
 
 function clean(word) {
     if (typeof word == typeof "") {
-
         return word.replace(/[a-z]|[0-9]|<|>|-|"|=|/g, "").replace("{ס}", "").replace("{פ}", "").replace("/", "").replace("|", "");
     }
 }
@@ -170,6 +184,28 @@ function setListOfSameInTora(obj, value) {
         fillTable(listOfSamePesukim);
     }
 
+}
+
+function setPesukimForPeopleNames(obj, value) {
+    const chars = value.split("");
+    const firstCharValue = chars[0];
+    const lastCharValue = chars[chars.length - 1];
+    const listOfPesukim = [];
+    for (const [k, v] of Object.entries(obj)) {
+        const sourcePerek = k;
+        v.forEach((pasuk, index) => {
+            const pasukChars = rejects(pasuk).split("");
+            const firstCharPasuk = pasukChars[0];
+            const lastCharPasuk = pasukChars[pasukChars.length - 1];
+
+            if (firstCharValue == firstCharPasuk && lastCharValue == lastCharPasuk) {
+                listOfPesukim.push(['', '', pasuk, sourcePerek + addIndexPasuk(index + 1)])
+            }  
+        });
+    }
+    if (listOfPesukim.length) {
+        fillTable(listOfPesukim);
+    }
 }
 
 function switchObject(sum) {
@@ -227,13 +263,12 @@ function inRange(sum) {
 
 function fillTable(listOfSamePesukim) {
 
-    let tableTheSame = document.getElementById("the-same");
+    let tableTheSame = document.getElementById("table");
+    document.getElementById("subject").innerText = "המילים האלו כתובים בתורה כאן";
     while (tableTheSame.rows.length > 1) {
         tableTheSame.deleteRow(1);
     }
     listOfSamePesukim.forEach(arrayOfPasuk => {
-
-        //console.log(arrayOfPasuk);
 
         const wordSpan = document.createElement("span");
         wordSpan.style.backgroundColor = "yellow";
