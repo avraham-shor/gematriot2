@@ -169,8 +169,11 @@ function setListOfSameInTora(obj, value) {
                     else if (mainWords.length) break;
                 }
                 if (mainWords.length) {
-                    const mainWordsJoined = mainWords.join(" ");
-                    const arr = pasuk.split(mainWordsJoined);
+                    let selectWords = mainWords.join(" ");
+                    if (value != rejects(selectWords)) {
+                        //CheckAgainThoroughly(pasuk,value);
+                    }
+                    const arr = pasuk.split(selectWords);
                     const rightOfPasuk = arr[0];
                     const leftOfPasuk = arr[1];
                     listOfSamePesukim.push([rightOfPasuk, mainWordsJoined, leftOfPasuk, sourcePerek + addIndexPasuk(index + 1)]);
@@ -184,6 +187,11 @@ function setListOfSameInTora(obj, value) {
         fillTable(listOfSamePesukim);
     }
 
+}
+
+function CheckAgainThoroughly(pasuk, value) {
+    //TODO
+    return "";
 }
 
 function setPesukimForPeopleNames(obj, value) {
