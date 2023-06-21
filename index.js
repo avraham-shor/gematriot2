@@ -163,7 +163,8 @@ function setListOfSameInTora(obj, value) {
                 for (let i = 0; i < wordsOfPasuk.length; i++) {
                     const word = wordsOfPasuk[i];
                     //check which words in the Pasuk are the same text
-                    if (value.includes(rejects(word))) {
+                    if (value.includes(rejects(word)) && word.length > 0) {
+                        debugger;
                         mainWords.push(word);
                     }
                     else if (mainWords.length) break;
@@ -176,7 +177,7 @@ function setListOfSameInTora(obj, value) {
                     const arr = pasuk.split(selectWords);
                     const rightOfPasuk = arr[0];
                     const leftOfPasuk = arr[1];
-                    listOfSamePesukim.push([rightOfPasuk, mainWordsJoined, leftOfPasuk, sourcePerek + addIndexPasuk(index + 1)]);
+                    listOfSamePesukim.push([rightOfPasuk, selectWords, leftOfPasuk, sourcePerek + addIndexPasuk(index + 1)]);
                 }
 
             }
