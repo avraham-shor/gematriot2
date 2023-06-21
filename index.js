@@ -56,6 +56,7 @@ function main() {
 
 
 function setGematrya(value) {
+    document.getElementById("subject").innerText = "מילים בתורה עם אותה גימטריה";
     let history = [];
     const sum = calculate(value);
     switchObject(sum);
@@ -97,7 +98,6 @@ function addToTheTable(sum) {
         tableRef.deleteRow(1);
     }
     if (torahValues && torahValues.length) {
-        document.getElementById("subject").innerText = "מילים בתורה עם אותה גימטריה";
         torahValues.forEach((arr) => {
 
             const mainOfPasuk = arr[1];
@@ -151,19 +151,20 @@ function clean(word) {
 }
 
 function setListOfSameInTora(obj, value) {
+    document.getElementById("subject").innerText = "המילים האלו כתובים בתורה כאן";
     const listOfSamePesukim = [];
     for (const [k, v] of Object.entries(obj)) {
         const sourcePerek = k;
         v.forEach((pasuk, index) => {
             pasuk = pasuk.replaceAll("־", " ");
 
-            if (rejects(pasuk).includes(value)) {
+            if (rejects(pasuk).includes(value) && value.length) {
                 const mainWords = [];
                 const wordsOfPasuk = pasuk.split(" ");
                 for (let i = 0; i < wordsOfPasuk.length; i++) {
                     const word = wordsOfPasuk[i];
                     //check which words in the Pasuk are the same text
-                    if (value.includes(rejects(word)) && word.length > 0) {
+                    if (value.includes(rejects(word)) && word.length) {
                         debugger;
                         mainWords.push(word);
                     }
@@ -196,6 +197,7 @@ function CheckAgainThoroughly(pasuk, value) {
 }
 
 function setPesukimForPeopleNames(obj, value) {
+    document.getElementById("subject").innerText = "פסוקים לשמות האנשים";
     const chars = value.split("");
     const firstCharValue = chars[0];
     const lastCharValue = chars[chars.length - 1];
@@ -274,7 +276,6 @@ function inRange(sum) {
 function fillTable(listOfSamePesukim) {
 
     let tableTheSame = document.getElementById("table");
-    document.getElementById("subject").innerText = "המילים האלו כתובים בתורה כאן";
     while (tableTheSame.rows.length > 1) {
         tableTheSame.deleteRow(1);
     }
