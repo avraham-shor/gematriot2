@@ -183,11 +183,11 @@ function setListOfSameInTora(obj, value) {
             }
         });
     }
-
-    if (listOfSamePesukim.length) {
-        fillTable(listOfSamePesukim);
+    if (!listOfSamePesukim.length) {
+        listOfSamePesukim.push(['','אין פסוקים','','אין מקורות']);
     }
 
+        fillTable(listOfSamePesukim);
 }
 
 function CheckAgainThoroughly(pasuk, value) {
@@ -212,9 +212,10 @@ function setPesukimForPeopleNames(obj, value) {
             }  
         });
     }
-    if (listOfPesukim.length) {
-        fillTable(listOfPesukim);
+    if (!listOfPesukim.length) {
+        listOfPesukim.push(['','אין פסוקים','','אין מקורות']);
     }
+        fillTable(listOfPesukim);
 }
 
 function switchObject(sum) {

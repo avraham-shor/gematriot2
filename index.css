@@ -5,6 +5,13 @@ body {
 
 }
 
+img {
+    position: absolute;
+    z-index: 10;
+    right: 0;
+    top: 0;
+}
+
 
 
 header {
