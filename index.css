@@ -1,5 +1,8 @@
 body {
     text-align: center;
+    /* background-image: url("logo.png");
+    background-color: #cccccc; */
+
 }
 
 
@@ -12,6 +15,7 @@ header {
     color: red;
     text-align: center;
     text-shadow: 5px -6px black;
+    
 }
 
 .descriptipon {
