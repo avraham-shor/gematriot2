@@ -2,6 +2,7 @@
 
 let gemOfTorah = {};
 let option = 1;
+let source = 1;
 
 // console.log(JSON.stringify(objTora, null, 4));
 
@@ -38,15 +39,44 @@ let option = 1;
 // })
 function main() {
     const value = document.getElementById("chars").value;
+    const hedderBtn2 = document.getElementById("hedderBtn2");
+    const hedderBtn3 = document.getElementById("hedderBtn3");
+    let obj = {};
+    switch (source) {
+        case 1:
+            obj = objTora;
+            hedderBtn2.innerText = "המילים בתורה";
+            hedderBtn3.innerText = 'פסוקים לש"א בתורה';
+            break;
+        case 2:
+            obj = objNevihim;
+            hedderBtn2.innerText = "המילים בנביאים";
+            hedderBtn3.innerText = 'פסוקים לש"א בנביאים';
+
+            break;
+        case 3:
+            obj = objKetuvim;
+            hedderBtn2.innerText = "המילים בכתובים";
+            hedderBtn3.innerText = 'פסוקים לש"א בכתובים';
+
+            break;
+        default:
+            obj = objTora;
+            hedderBtn2.innerText = "המילים בתורה";
+            hedderBtn3.innerText = "פסוקים לשמות אנשים בתורה";
+
+            break;
+    }
+
     switch (option) {
         case 1:
             setGematrya(value)
             break;
         case 2:
-            setListOfSameInTora(objTora, value);
+            setListOfSameInTora(obj, value);
             break;
         case 3:
-            setPesukimForPeopleNames(objTora, value)
+            setPesukimForPeopleNames(obj, value)
             break;
         default:
             setGematrya(value)
@@ -77,6 +107,11 @@ function setGematrya(value) {
 
 function setOption(value) {
     option = value;
+    main();
+}
+
+function setSource(value) {
+    source = value;
     main();
 }
 
