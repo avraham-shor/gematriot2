@@ -1,6 +1,6 @@
 
 
-let gemOfTorah = tora_0_300;
+let gemOfTorah = {};
 let option = 1;
 
 // console.log(JSON.stringify(objTora, null, 4));
@@ -173,7 +173,7 @@ function setListOfSameInTora(obj, value) {
                 if (mainWords.length) {
                     let selectWords = mainWords.join(" ");
                     if (value != rejects(selectWords)) {
-                        //CheckAgainThoroughly(pasuk,value);
+                       selectWords = CheckAgainThoroughly(pasuk,value);
                     }
                     const arr = pasuk.split(selectWords);
                     const rightOfPasuk = arr[0];
@@ -194,19 +194,25 @@ function setListOfSameInTora(obj, value) {
 function CheckAgainThoroughly(pasuk, value) {
     debugger;
     const chars = pasuk.split('');
-    let same = [];
-    chars.forEach(char => {
-         if (!rejects(char) || value.includes(char)) {
-            same.push(char);
-        }
-        else {
-            if (same.length && rejects(same.join('')) == value) {
-                return same.join('')
+    const start = focusToStart(pasuk, value);
+    let same = chars[start];
+    for (let i = start+1; i < chars.length; i++) {
+        const char = chars[i];
+        if (same.length && value.includes(rejects(same + char))) {
+            same += char;
+            if (rejects(same) == value) {
+                return same;
             }
-            else same = [];
         }
-    });
-    return "";
+        else same = char;
+    }
+}
+
+function focusToStart(pasuk, value) {
+    //Estimated start 
+    let index = rejects(pasuk).indexOf(value);
+    index = pasuk.indexOf(value[0], index);
+    return index;
 }
 
 function setPesukimForPeopleNames(obj, value) {
@@ -236,37 +242,37 @@ function setPesukimForPeopleNames(obj, value) {
 function switchObject(sum) {
     switch (inRange(sum)) {
         case 0:
-            gemOfTorah = tora_0_300;
+            gemOfTorah = tora_0_300 || {};
             break;
         case 300:
-            gemOfTorah = tora_300_600;
+            gemOfTorah = tora_300_600 || {};
             break;
         case 600:
-            gemOfTorah = tora_600_900;
+            gemOfTorah = tora_600_900 || {};
             break;
         case 900:
-            gemOfTorah = tora_900_1200;
+            gemOfTorah = tora_900_1200 || {};
             break;
         case 1200:
-            gemOfTorah = tora_1200_1500;
+            gemOfTorah = tora_1200_1500 || {};
             break;
         case 1500:
-            gemOfTorah = tora_1500_1800;
+            gemOfTorah = tora_1500_1800 || {};
             break;
         case 1800:
-            gemOfTorah = tora_1800_2100;
+            gemOfTorah = tora_1800_2100 || {};
             break;
         case 2100:
-            gemOfTorah = tora_2100_2400;
+            gemOfTorah = tora_2100_2400 || {};
             break;
         case 2400:
-            gemOfTorah = tora_2400_2700;
+            gemOfTorah = tora_2400_2700 || {};
             break;
         case 2700:
-            gemOfTorah = tora_2700_3000;
+            gemOfTorah = tora_2700_3000 || {};
             break;
         case 3000:
-            gemOfTorah = tora_3000_3600;
+            gemOfTorah = tora_3000_3600 || {};
             break;
 
 
