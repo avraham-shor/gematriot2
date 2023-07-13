@@ -1,9 +1,5 @@
 const FS = require('fs');
-const axios = require('axios');
-BASE_URL = "https://www.sefaria.org/api/texts/";
-PARAMS = "?ven=The_Contemporary_Torah,_Jewish_Publication_Society,_2006&vhe=Miqra_according_to_the_Masorah&lang=he&aliyot=0";
-const CHUMASHIM = [{ 'Genesis.': 50 }, { 'shmot.': 40 }, { 'Leviticus.': 27 }, { 'bamidbar.': 36 }, { 'dvarim.': 34 }
-];
+
 const VAL = { 'א': 1, 'ת': 400, 'ש': 300, 'ר': 200, 'ק': 100, 'ץ': 90, 'צ': 90, 'ף': 80, 'פ': 80, 'ע': 70, 'ס': 60, 'ן': 50, 'נ': 50, 'ם': 40, 'מ': 40, 'ל': 30, 'ך': 20, 'כ': 20, 'י': 10, 'ט': 9, 'ח': 8, 'ז': 7, 'ו': 6, 'ה': 5, 'ד': 4, 'ג': 3, 'ב': 2, }
 
 const VAL_OBVERSE = {};
@@ -29,7 +25,7 @@ main();
 function main() {
 
     gemOfTorah = {};
-    let rawdata = FS.readFileSync('gem-nevihim2.json');
+    let rawdata = FS.readFileSync('gem-nevihim.json');
     gemOfTorah = JSON.parse(rawdata);
     console.log("start");
     getChumashimAndPrintFile();
@@ -70,9 +66,6 @@ function setListOfNumbersInTora(gemOfTorah, seferName, sefer) {
     seferLength = sefer.length * 100;
     sefer.forEach((perek, perekIndex) => {
         perek.forEach((pasuk, pasukIndex) => {
-            // console.log(e, index);
-            // console.log(1, pasuk);
-            // console.log(2, pasuk);
             wordsOfPasuk = pasuk.split(' ');
             for (let i = 0; i < wordsOfPasuk.length; i++) {
                 for (let j = i + 1; j <= wordsOfPasuk.length; j++) {
@@ -83,9 +76,7 @@ function setListOfNumbersInTora(gemOfTorah, seferName, sefer) {
                         if (!gemOfTorah[calculatedWord]) {
                             gemOfTorah[calculatedWord] = [];
                         }
-                        // console.log('word:', word, rejects(word) );
                         wordWithoutNikud = rejects(word);
-                        //gemOfTorah[calculate(word)] = ;
                         if (!gemOfTorah[calculatedWord].filter(oldWord => rejects(oldWord) == wordWithoutNikud).length) {
                             gemOfTorah[calculatedWord].push(word);
                             const start = i;
