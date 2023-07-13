@@ -6,9 +6,9 @@ const VAL_OBVERSE = {};
 
 let seferLength = 20;
 
-let nameOfFile = "gem-nevihim-source.js";
+let nameOfFile = "gem-cetuvim-source.js";
 
-let nameOfObject = "const gemSourceNevihim = ";
+let nameOfObject = "const gemSourceCetuvim = ";
 
 
 
@@ -25,11 +25,11 @@ main();
 function main() {
 
     gemOfTorah = {};
-    let rawdata = FS.readFileSync('gem-nevihim.json');
+    let rawdata = FS.readFileSync('gem-cetuvim.json');
     gemOfTorah = JSON.parse(rawdata);
     console.log("start");
     getChumashimAndPrintFile();
-   
+   console.log("end");
 }
 
 
@@ -63,7 +63,7 @@ function getChumashimAndPrintFile() {
 
 function setListOfNumbersInTora(gemOfTorah, seferName, sefer) {
     console.log(seferName);
-    seferLength = sefer.length * 100;
+    seferLength = sefer.length * 20;
     sefer.forEach((perek, perekIndex) => {
         perek.forEach((pasuk, pasukIndex) => {
             wordsOfPasuk = pasuk.split(' ');
