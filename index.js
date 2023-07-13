@@ -191,7 +191,6 @@ function setListOfSameInTora(obj, value) {
     for (const [k, v] of Object.entries(obj)) {
         const sourcePerek = k;
         v.forEach((pasuk, index) => {
-            pasuk = pasuk.replaceAll("־", " ");
 
             if (rejects(pasuk).includes(value) && value.length) {
                 const mainWords = [];
