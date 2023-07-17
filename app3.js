@@ -95,12 +95,12 @@ function getChumashimAndPrintFile(index) {
         axios.get(BASE_URL + CHUMASH + i + PARAMS).then(resp => {
             setTimeout(() => {
                 setTora(gemOfTorah, resp.data);
-            }, perekLength);
+            }, perekLength * 20);
         });
     }
     setTimeout(() => {
         getChumashimAndPrintFile(index + 1)
-    }, 100 * range);
+    }, 500 * range);
 }
 
 

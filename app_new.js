@@ -63,7 +63,7 @@ function getChumashimAndPrintFile() {
 
 function setListOfNumbersInTora(gemOfTorah, seferName, sefer) {
     console.log(seferName);
-    seferLength = sefer.length * 20;
+    seferLength = sefer.length * 100;
     sefer.forEach((perek, perekIndex) => {
         perek.forEach((pasuk, pasukIndex) => {
             wordsOfPasuk = pasuk.split(' ');
@@ -77,10 +77,13 @@ function setListOfNumbersInTora(gemOfTorah, seferName, sefer) {
                             gemOfTorah[calculatedWord] = [];
                         }
                         wordWithoutNikud = rejects(word);
-                        if (!gemOfTorah[calculatedWord].filter(oldWord => rejects(oldWord) == wordWithoutNikud).length) {
+                        if (calculatedWord < 100) { // || calculatedWord == 0 || !gemOfTorah[calculatedWord].filter(oldWord => rejects(oldWord) == wordWithoutNikud).length) {
+                            console.log(pasuk.split("").reverse().join(""));
+                            console.log(calculatedWord, word.split("").reverse().join(""));
                             gemOfTorah[calculatedWord].push(word);
                             const start = i;
                             const end = j;
+                            console.log(seferName, perekIndex, pasukIndex, start, end);
                             addToTheSourceObj(calculatedWord, seferName, perekIndex, pasukIndex, start, end);
                         }
 
@@ -111,14 +114,6 @@ function addToTheSourceObj(value, seferName, perek, pasuk, start, end) {
 
 }
 
-
-function addIndexPasuk(index) {
-    const some = index % 10;
-    const tens = index % 100 - some;
-    const hundreds = index - tens - some;
-    return ' ' + VAL_OBVERSE[hundreds] + VAL_OBVERSE[tens] + VAL_OBVERSE[some].replace('טז', 'יו').replace('טו', 'יה');
-
-}
 
 function calculate(value) {
     return ('$$' + value).split('').map(c => VAL[c] || 0).reduce((a, b) => a + b);

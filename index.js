@@ -42,20 +42,24 @@ function main() {
     const hedderBtn2 = document.getElementById("hedderBtn2");
     const hedderBtn3 = document.getElementById("hedderBtn3");
     let obj = {};
+    let objSource = {};
     switch (source) {
         case 1:
             obj = gemTora;
+            objSource = gemSourceTora;
             hedderBtn2.innerText = "המילים בתורה";
             hedderBtn3.innerText = 'פסוקים לש"א בתורה';
             break;
         case 2:
             obj = gemNevihim;
+            objSource = gemSourceNevihim;
             hedderBtn2.innerText = "המילים בנביאים";
             hedderBtn3.innerText = 'פסוקים לש"א בנביאים';
 
             break;
         case 3:
             obj = gemCetuvim;
+            objSource = gemSourceCetuvim;
             hedderBtn2.innerText = "המילים בכתובים";
             hedderBtn3.innerText = 'פסוקים לש"א בכתובים';
 
@@ -70,7 +74,7 @@ function main() {
 
     switch (option) {
         case 1:
-            setGematrya(value)
+            setGematrya(value, obj, objSource);
             break;
         case 2:
             setListOfSameInTora(obj, value);
@@ -85,11 +89,15 @@ function main() {
 }
 
 
-function setGematrya(value) {
+function setGematrya(value, obj, objSource) {
     document.getElementById("subject").innerText = "מילים בתורה עם אותה גימטריה";
-    let history = [];
     const sum = calculate(value);
-    switchObject(sum);
+    setHistory(sum, value);
+    setGematriaRows(sum, obj, objSource)
+}
+
+function setHistory(sum, value) {
+    let history = [];
     document.getElementById('sum').innerText = sum;
     localStorage.getItem('history') ? history = localStorage.getItem('history').split('%%') : [];
     history = history.filter((v, i) => history.indexOf(v) === i).sort();
@@ -101,8 +109,6 @@ function setGematrya(value) {
     if (sum > 0 && value.length > 1) history.push(cleanValue + " ");
     // console.log('history:', history);
     localStorage.setItem('history', history.join('%%'));
-
-    addToTheTable(sum);
 }
 
 function setOption(value) {
@@ -126,42 +132,42 @@ function addIndexInHebrew(index) {
 
 }
 
-function addToTheTable(sum) {
-    torahValues = gemOfTorah[sum];
-    let tableRef = document.getElementById("table");
-    while (tableRef.rows.length > 1) {
-        tableRef.deleteRow(1);
-    }
-    if (torahValues && torahValues.length) {
-        torahValues.forEach((arr) => {
+// function addToTheTable(sum) {
+//     torahValues = gemOfTorah[sum];
+//     let tableRef = document.getElementById("table");
+//     while (tableRef.rows.length > 1) {
+//         tableRef.deleteRow(1);
+//     }
+//     if (torahValues && torahValues.length) {
+//         torahValues.forEach((arr) => {
 
-            const mainOfPasuk = arr[1];
+//             const mainOfPasuk = arr[1];
 
-            const wordSpan = document.createElement("span");
-            wordSpan.style.backgroundColor = "yellow";
-            wordSpan.textContent = mainOfPasuk;
+//             const wordSpan = document.createElement("span");
+//             wordSpan.style.backgroundColor = "yellow";
+//             wordSpan.textContent = mainOfPasuk;
 
-            const source = arr[3];
-            let newRow = tableRef.insertRow(-1);
+//             const source = arr[3];
+//             let newRow = tableRef.insertRow(-1);
 
-            let sourceCell = newRow.insertCell(0);
-            let pasukCell = newRow.insertCell(1);
+//             let sourceCell = newRow.insertCell(0);
+//             let pasukCell = newRow.insertCell(1);
 
-            pasukCell.classList.add("pesukim");
+//             pasukCell.classList.add("pesukim");
 
-            let sourceText = document.createTextNode(source);
-            let pasukText1 = document.createTextNode(arr[0]);
-            let pasukText2 = document.createTextNode(arr[2]);
+//             let sourceText = document.createTextNode(source);
+//             let pasukText1 = document.createTextNode(arr[0]);
+//             let pasukText2 = document.createTextNode(arr[2]);
 
-            sourceCell.appendChild(sourceText);
-            pasukCell.appendChild(pasukText1);
-            pasukCell.appendChild(wordSpan);
-            pasukCell.appendChild(pasukText2);
+//             sourceCell.appendChild(sourceText);
+//             pasukCell.appendChild(pasukText1);
+//             pasukCell.appendChild(wordSpan);
+//             pasukCell.appendChild(pasukText2);
 
-        });
-    }
+//         });
+//     }
 
-}
+// }
 
 function calculate(value) {
     return ('$$' + value).split('').map(c => VAL[c] || 0).reduce((a, b) => a + b);
@@ -277,56 +283,41 @@ function setPesukimForPeopleNames(obj, value) {
         fillTable(listOfPesukim);
 }
 
-function switchObject(sum) {
-    switch (inRange(sum)) {
-        case 0:
-            gemOfTorah = tora_0_300 || {};
-            break;
-        case 300:
-            gemOfTorah = tora_300_600 || {};
-            break;
-        case 600:
-            gemOfTorah = tora_600_900 || {};
-            break;
-        case 900:
-            gemOfTorah = tora_900_1200 || {};
-            break;
-        case 1200:
-            gemOfTorah = tora_1200_1500 || {};
-            break;
-        case 1500:
-            gemOfTorah = tora_1500_1800 || {};
-            break;
-        case 1800:
-            gemOfTorah = tora_1800_2100 || {};
-            break;
-        case 2100:
-            gemOfTorah = tora_2100_2400 || {};
-            break;
-        case 2400:
-            gemOfTorah = tora_2400_2700 || {};
-            break;
-        case 2700:
-            gemOfTorah = tora_2700_3000 || {};
-            break;
-        case 3000:
-            gemOfTorah = tora_3000_3600 || {};
-            break;
-
-
-        default:
-            break;
+function setGematriaRows(sum, obj, objSource) {
+    const sources = objSource[sum];
+    const listOfRows = [];
+    sources.forEach(source => {
+        const seferName = source[0];
+        const perek = source[1];
+        const pasuk = source[2];
+        const start = source[3];
+        const end = source[4];
+        const row = getPasukBySource(obj, seferName, perek, pasuk, start, end);
+        listOfRows.push(row);
+    });
+    if (!listOfRows.length) {
+        listOfRows.push(['','אין פסוקים','','אין מקורות']);
     }
+
+        fillTable(listOfRows);
 }
 
-function inRange(sum) {
-    if (sum < 3000) {
-        return sum - sum % 300;
+function getPasukBySource(obj, seferName, perek, pasuk, start, end) {
+    const entirePasuk = obj[seferName][perek][pasuk];
+    if (!entirePasuk) {
+        debugger;  
+        return ["","","",""];
+      }
+    const selectWords = entirePasuk.split(" ").slice(start, end).join(" ");
+    if (!selectWords) {
+      debugger;  
+      return ["","","",""];
     }
-    if (sum >= 6000) {
-        return end
-    }
-    return sum - sum % 600;
+    const splitPasuk = entirePasuk.split(selectWords);
+    const right = splitPasuk[0];
+    const left = splitPasuk[1];
+    const source = seferName + " " + addIndexInHebrew(perek + 1) + " " + addIndexInHebrew(pasuk + 1);
+    return [right, selectWords, left, source];
 }
 
 
