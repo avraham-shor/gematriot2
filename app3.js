@@ -72,7 +72,7 @@ function setSfarim(type) {
     }
 }
 
-//https://www.sefaria.org/api/texts/I Chronicles.230?ven=The_Contemporary_Torah,_Jewish_Publication_Society,_2006&vhe=Miqra_according_to_the_Masorah&lang=he&aliyot=0
+//https://www.sefaria.org/api/texts/Psalms.1?ven=The_Contemporary_Torah,_Jewish_Publication_Society,_2006&vhe=Miqra_according_to_the_Masorah&lang=he&aliyot=0
 
 function writeAFile() {
     const ObjectJson = JSON.stringify(gemOfTorah);
@@ -95,7 +95,7 @@ function getChumashimAndPrintFile(index) {
         axios.get(BASE_URL + CHUMASH + i + PARAMS).then(resp => {
             setTimeout(() => {
                 setTora(gemOfTorah, resp.data);
-            }, perekLength * 20);
+            }, perekLength * 100);
         });
     }
     setTimeout(() => {
@@ -109,7 +109,7 @@ function getChumashimAndPrintFile(index) {
 
 function setTora(gemOfTorah, perek) {
     if (perek.he) {
-        perekLength = perek.he.length * 2;
+        perekLength = perek.he.length * 20;
         perek.he = perek.he.map((pasuk) => {
             return clean(pasuk);
           });
