@@ -6,10 +6,11 @@ const VAL_OBVERSE = {};
 
 let seferLength = 20;
 
-let nameOfFile = "gem-cetuvim-source.js";
+let nameOfFile = "gem-tora-source.js";
 
-let nameOfObject = "const gemSourceCetuvim = ";
+let nameOfObject = "const gemSourceTora = ";
 
+let fileToRead = "gem-cetuvim.json";
 
 
 Object.keys(VAL).forEach(function (key) {
@@ -25,14 +26,36 @@ main();
 function main() {
 
     gemOfTorah = {};
-    let rawdata = FS.readFileSync('gem-cetuvim.json');
+    setObjects(1);
+    let rawdata = FS.readFileSync(fileToRead);
     gemOfTorah = JSON.parse(rawdata);
     console.log("start");
     getChumashimAndPrintFile();
    console.log("end");
 }
 
+function setObjects(type) {
+    switch (type) {
+        case 1:
+            nameOfFile = "gem-tora-source.js";
+            nameOfObject = "const gemSourceTora = ";
+            fileToRead = "gem-tora.json";
+            break;
+        case 2:
+            nameOfFile = "gem-nevihim-source.js";
+            nameOfObject = "const gemSourceNevihim = ";
+            fileToRead = "gem-nevihim.json";
 
+            break
+        case 3:
+            nameOfFile = "gem-cetuvim-source.js";
+            nameOfObject = "const gemSourceCetuvim = ";
+            fileToRead = "gem-cetuvim.json";
+            break;
+        default:
+            break;
+    }
+}
 
 function writeAFile() {
     const ObjectJson = JSON.stringify(sourceOfGems);

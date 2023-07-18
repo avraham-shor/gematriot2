@@ -44,7 +44,7 @@ main();
 
 function main() {
     //1. Tora, 2. Nevihim, 3. Cetuvim
-    setSfarim(3);
+    setSfarim(1);
     getChumashimAndPrintFile(0);
     gemOfTorah = {};
 
@@ -111,14 +111,20 @@ function setTora(gemOfTorah, perek) {
     if (perek.he) {
         perekLength = perek.he.length * 20;
         perek.he = perek.he.map((pasuk) => {
+            //console.log(pasuk);
             return clean(pasuk);
           });
-         const perekSource = perek.heRef.replace("שמואל ", "שמואל-").replace("מלכים ", "מלכים-").replace("דברי הימים ", "דברי-הימים-").replace("שיר השירים", "שיר-השירים")
-        const chumash = perekSource.split(" ")[0];
+         const perekSource = perek.heRef.replace("שמואל ", "שמואל-").replace("מלכים ", "מלכים-").replace("דברי הימים ", "דברי-הימים-").replace("שיר השירים", "שיר-השירים");
+         const perekSourceSplit = perekSource.split(" ");
+        const chumash = perekSourceSplit[0];
+        const perekChar = perekSourceSplit[1];
+        //console.log(perekChar);
+        const perekNumber = getPerekNumber(perekChar);
         if (!gemOfTorah[chumash]) {
             gemOfTorah[chumash] = [];
         }
-        gemOfTorah[chumash].push(perek.he)
+        gemOfTorah[chumash][perekNumber] = perek.he;
+        //console.log(chumash, perekNumber, gemOfTorah[chumash][perekNumber]);
     }
 }
 
@@ -142,12 +148,21 @@ function rejects(word) {
 }
 
 function clean(word) {
+    //console.log(word);
     if (typeof word == typeof "") {
         const twoOrMoreSpaces = /\s+/g;
         const betweenTwoHalfBrackets = /\([^)]*\)|\[[^\]]*\]/g;
         return word.replaceAll(/[a-z]|[0-9]|<|>|-|"|=|/g, "").replaceAll("{ס}", "").replaceAll("{פ}", "")
         .replace(betweenTwoHalfBrackets, "").replaceAll("/", "").replaceAll("|", "").replaceAll("*", "").replaceAll(twoOrMoreSpaces, " ");
     }
+}
+
+function getPerekNumber(perek) {
+    perek = perek.replace('״','').replace("׳", "");
+    //console.log(perek);
+    const num = perek.split("").map(char => VAL[char]).reduce((a,b) => a+b);
+    //console.log(num - 1);
+    return num -1;
 }
 
 // function inRange(gematria, min) {
