@@ -195,6 +195,7 @@ function setListOfSameInTora(obj, value) {
     document.getElementById("subject").innerText = "המילים האלו כתובים בתורה כאן";
     const listOfSamePesukim = [];
     for (const [k, v] of Object.entries(obj)) {
+        console.log(k);
        //console.log(v);
         const seferName = k;
         v.forEach((perek, indexPerek) => {
