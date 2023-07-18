@@ -100,13 +100,13 @@ function setListOfNumbersInTora(gemOfTorah, seferName, sefer) {
                             gemOfTorah[calculatedWord] = [];
                         }
                         wordWithoutNikud = rejects(word);
-                        if (calculatedWord < 100) { // || calculatedWord == 0 || !gemOfTorah[calculatedWord].filter(oldWord => rejects(oldWord) == wordWithoutNikud).length) {
-                            console.log(pasuk.split("").reverse().join(""));
-                            console.log(calculatedWord, word.split("").reverse().join(""));
+                        if (calculatedWord != 0 && !gemOfTorah[calculatedWord].filter(oldWord => rejects(oldWord) == wordWithoutNikud).length) {
+                            // console.log(pasuk.split("").reverse().join(""));
+                            // console.log(calculatedWord, word.split("").reverse().join(""));
                             gemOfTorah[calculatedWord].push(word);
                             const start = i;
                             const end = j;
-                            console.log(seferName, perekIndex, pasukIndex, start, end);
+                            //console.log(seferName, perekIndex, pasukIndex, start, end);
                             addToTheSourceObj(calculatedWord, seferName, perekIndex, pasukIndex, start, end);
                         }
 
