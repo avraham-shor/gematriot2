@@ -53,7 +53,7 @@ function main() {
 function setSfarim(type) {
     switch (type) {
         case 1:
-            nameOfFile = "gem-tora.js";
+            nameOfFile = `gem-tora.js`;
             nameOfObject = "const gemTora = ";
             SFARIM = CHUMASHIM;
             break;
