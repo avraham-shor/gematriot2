@@ -26,7 +26,7 @@ main();
 function main() {
 
     gemOfTorah = {};
-    setObjects(1);
+    setObjects(3);
     let rawdata = FS.readFileSync(fileToRead);
     gemOfTorah = JSON.parse(rawdata);
     console.log("start");
@@ -72,7 +72,7 @@ function getChumashimAndPrintFile() {
         let sefer = v;
         setTimeout(() => {
             setListOfNumbersInTora(gemOfTorah, seferName, sefer);
-        }, seferLength);
+        }, seferLength * 10);
     }
 
     setTimeout(() => {

@@ -44,7 +44,7 @@ main();
 
 function main() {
     //1. Tora, 2. Nevihim, 3. Cetuvim
-    setSfarim(1);
+    setSfarim(3);
     getChumashimAndPrintFile(0);
     gemOfTorah = {};
 
@@ -84,7 +84,7 @@ function getChumashimAndPrintFile(index) {
     if (index >= SFARIM.length) {
         setTimeout(() => {
             writeAFile()
-        }, 6000);
+        }, 22000);
         return;
     }
     const chumash = SFARIM[index];
@@ -100,7 +100,7 @@ function getChumashimAndPrintFile(index) {
     }
     setTimeout(() => {
         getChumashimAndPrintFile(index + 1)
-    }, 500 * range);
+    }, 5000 * range);
 }
 
 
@@ -128,24 +128,6 @@ function setTora(gemOfTorah, perek) {
     }
 }
 
-
-function addIndexPasuk(index) {
-    const some = index % 10;
-    const tens = index % 100 - some;
-    const hundreds = index - tens - some;
-    return ' ' + VAL_OBVERSE[hundreds] + VAL_OBVERSE[tens] + VAL_OBVERSE[some].replace('טז', 'יו').replace('טו', 'יה');
-
-}
-
-function calculate(value) {
-    return ('$$' + value).split('').map(c => VAL[c] || 0).reduce((a, b) => a + b);
-}
-
-function rejects(word) {
-    if (typeof word == typeof "") {
-        return word.split('').map(c => c.match(/[א-ת]/) ? c.match(/[א-ת]/)[0] : '').join('');
-    }
-}
 
 function clean(word) {
     //console.log(word);
