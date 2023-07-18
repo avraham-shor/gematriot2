@@ -29,9 +29,7 @@ function main() {
     setObjects(3);
     let rawdata = FS.readFileSync(fileToRead);
     gemOfTorah = JSON.parse(rawdata);
-    console.log("start");
     getChumashimAndPrintFile();
-   console.log("end");
 }
 
 function setObjects(type) {
@@ -66,7 +64,6 @@ function writeAFile() {
 
 function getChumashimAndPrintFile() {
 
-
     for (const [k, v] of Object.entries(gemOfTorah)) {
         let seferName = k;
         let sefer = v;
@@ -79,9 +76,6 @@ function getChumashimAndPrintFile() {
         writeAFile()
     }, 22000);
 }
-
-
-
 
 
 function setListOfNumbersInTora(gemOfTorah, seferName, sefer) {
@@ -124,17 +118,7 @@ function addToTheSourceObj(value, seferName, perek, pasuk, start, end) {
         sourceOfGems[value] = [];
     }
     sourceOfGems[value].push(source);
-    // //testing
-    // const entirePasuk = gemOfTorah[seferName][perek][pasuk];
-    // const select = entirePasuk.split(" ").slice(start, end).join(" ");
-    // const parts = entirePasuk.split(select);
-    // if (value < 100) {
-    //     const one = parts[0].split("").reverse().join("");
-    //     const two = select.split("").reverse().join("");
-    //     const three = parts[1].split("").reverse().join("");
-    //     console.log("value: ", value, "1. ", one, "2. ", two, "3. ", three);
-    // }
-
+ 
 }
 
 
@@ -147,7 +131,3 @@ function rejects(word) {
         return word.split('').map(c => c.match(/[א-ת]/) ? c.match(/[א-ת]/)[0] : '').join('');
     }
 }
-
-
-
-
