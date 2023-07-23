@@ -5,6 +5,7 @@ let source = 1;
 
 function main() {
     const value = document.getElementById("chars").value;
+    const hedderBtn1 = document.getElementById("hedderBtn1");
     const hedderBtn2 = document.getElementById("hedderBtn2");
     const hedderBtn3 = document.getElementById("hedderBtn3");
     let obj = {};
@@ -13,12 +14,14 @@ function main() {
         case 1:
             obj = gemTora;
             objSource = gemSourceTora;
+            hedderBtn1.innerText = "הגימטריה בתורה";
             hedderBtn2.innerText = "המילים בתורה";
             hedderBtn3.innerText = 'פסוקים לש"א בתורה';
             break;
         case 2:
             obj = gemNevihim;
             objSource = gemSourceNevihim;
+            hedderBtn1.innerText = "הגימטריה בנביאים";
             hedderBtn2.innerText = "המילים בנביאים";
             hedderBtn3.innerText = 'פסוקים לש"א בנביאים';
 
@@ -26,6 +29,7 @@ function main() {
         case 3:
             obj = gemCetuvim;
             objSource = gemSourceCetuvim;
+            hedderBtn1.innerText = "הגימטריה בכתובים";
             hedderBtn2.innerText = "המילים בכתובים";
             hedderBtn3.innerText = 'פסוקים לש"א בכתובים';
 
@@ -214,15 +218,18 @@ function setPesukimForPeopleNames(obj, value) {
 function setGematriaRows(sum, obj, objSource) {
     const sources = objSource[sum];
     const listOfRows = [];
-    sources.forEach(source => {
-        const seferName = source[0];
-        const perek = source[1];
-        const pasuk = source[2];
-        const start = source[3];
-        const end = source[4];
-        const row = getPasukBySource(obj, seferName, perek, pasuk, start, end);
-        listOfRows.push(row);
-    });
+    if (sources && sources.length) {
+        sources.forEach(source => {
+            const seferName = source[0];
+            const perek = source[1];
+            const pasuk = source[2];
+            const start = source[3];
+            const end = source[4];
+            const row = getPasukBySource(obj, seferName, perek, pasuk, start, end);
+            listOfRows.push(row);
+        });
+    }
+    
     if (!listOfRows.length) {
         listOfRows.push(['', 'אין פסוקים', '', 'אין מקורות']);
     }

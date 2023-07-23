@@ -21,20 +21,23 @@
     <div>
         <input type="text" id="chars" placeholder="הכנס כאן את המילה / מילים" class="input">
     </div>
-    <div class="buttons-box">
-        <button class="button-9 with25" role="button" onclick="setOption(1)">הגימטריא בתנ"ך </button>
-        <button class="button-9 with25" role="button" id="hedderBtn2" onclick="setOption(2)"> המילים בתנ"ך </button>
-        <button class="button-9 with25" role="button" id="hedderBtn3" onclick="setOption(3)" > פסוקים לשמות אנשים </button>
-    </div>
-    <div class="buttons-box pading-2">
+    <div class="buttons-box padding-4 padding-bottom-4">
         <button class="button-9 with25 light-blue" role="button" onclick="setSource(1)"> תורה </button>
         <button class="button-9 with25 light-blue" role="button" onclick="setSource(2)"> נביאים </button>
         <button class="button-9 with25 light-blue" role="button" onclick="setSource(3)"> כתובים </button>
     </div>
+    <div class="buttons-box padding-bottom-4">
+        <button class="button-9 with25" role="button" id="hedderBtn1" onclick="setOption(1)">הגימטריא בתנ"ך </button>
+        <button class="button-9 with25" role="button" id="hedderBtn2" onclick="setOption(2)"> המילים בתנ"ך </button>
+        <button class="button-9 with25" role="button" id="hedderBtn3" onclick="setOption(3)" > פסוקים לשמות אנשים </button>
+    </div>
     <div>
         <h1 id="sum" style="font-size: 5rem;"></h1>
-        <h1 class="descriptipon">מילים שחיפשת בעבר עם אותה גימטריה:</h1>
-        <h1 id="history" style="font-size: 3rem;"></h1>
+        <div class="hide">
+            <h1 class="descriptipon">מילים שחיפשת בעבר עם אותה גימטריה:</h1>
+            <h1 id="history" style="font-size: 3rem;"></h1>
+        </div>
+        
         <div class="table-box">
             <table border="1" id="table">
                 <tr>
