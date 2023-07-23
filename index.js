@@ -262,7 +262,7 @@ function fillTable(listOfSamePesukim) {
     while (tableTheSame.rows.length > 1) {
         tableTheSame.deleteRow(1);
     }
-    listOfSamePesukim.forEach(arrayOfPasuk => {
+    listOfSamePesukim.forEach((arrayOfPasuk, index) => {
 
         const wordSpan = document.createElement("span");
         wordSpan.style.backgroundColor = "yellow";
@@ -270,15 +270,18 @@ function fillTable(listOfSamePesukim) {
 
         let newRow = tableTheSame.insertRow(-1);
 
-        let sourceCell = newRow.insertCell(0);
-        let pasukCell = newRow.insertCell(1);
+        let counterCell = newRow.insertCell(0);
+        let sourceCell = newRow.insertCell(1);
+        let pasukCell = newRow.insertCell(2);
 
         pasukCell.classList.add("pesukim");
 
+        let counterText = document.createTextNode(index +1);
         let sourceText = document.createTextNode(arrayOfPasuk[3]);
         let pasukText1 = document.createTextNode(arrayOfPasuk[0]);
         let pasukText2 = document.createTextNode(arrayOfPasuk[2]);
 
+        counterCell.appendChild(counterText);
         sourceCell.appendChild(sourceText);
         pasukCell.appendChild(pasukText1);
         pasukCell.appendChild(wordSpan);
