@@ -3,7 +3,7 @@ let option = 1;
 let source = 1;
 
 
-function main() {
+async function main() {
     const value = document.getElementById("chars").value;
     const hedderBtn1 = document.getElementById("hedderBtn1");
     const hedderBtn2 = document.getElementById("hedderBtn2");
@@ -13,14 +13,14 @@ function main() {
     switch (source) {
         case 1:
             obj = gemTora;
-            objSource = gemSourceTora || {};
+            objSource = await gemSourceTora || {};
             hedderBtn1.innerText = "הגימטריה בתורה";
             hedderBtn2.innerText = "המילים בתורה";
             hedderBtn3.innerText = 'פסוקים לש"א בתורה';
             break;
         case 2:
             obj = gemNevihim;
-            objSource = gemSourceNevihim || {};
+            objSource = await gemSourceNevihim || {};
             hedderBtn1.innerText = "הגימטריה בנביאים";
             hedderBtn2.innerText = "המילים בנביאים";
             hedderBtn3.innerText = 'פסוקים לש"א בנביאים';
@@ -28,7 +28,7 @@ function main() {
             break;
         case 3:
             obj = gemCetuvim;
-            objSource = gemSourceCetuvim || {};
+            objSource = await gemSourceCetuvim || {};
             hedderBtn1.innerText = "הגימטריה בכתובים";
             hedderBtn2.innerText = "המילים בכתובים";
             hedderBtn3.innerText = 'פסוקים לש"א בכתובים';
