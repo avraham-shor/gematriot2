@@ -13,14 +13,14 @@ function main() {
     switch (source) {
         case 1:
             obj = gemTora;
-            objSource = gemSourceTora;
+            objSource = gemSourceTora || {};
             hedderBtn1.innerText = "הגימטריה בתורה";
             hedderBtn2.innerText = "המילים בתורה";
             hedderBtn3.innerText = 'פסוקים לש"א בתורה';
             break;
         case 2:
             obj = gemNevihim;
-            objSource = gemSourceNevihim;
+            objSource = gemSourceNevihim || {};
             hedderBtn1.innerText = "הגימטריה בנביאים";
             hedderBtn2.innerText = "המילים בנביאים";
             hedderBtn3.innerText = 'פסוקים לש"א בנביאים';
@@ -28,7 +28,7 @@ function main() {
             break;
         case 3:
             obj = gemCetuvim;
-            objSource = gemSourceCetuvim;
+            objSource = gemSourceCetuvim || {};
             hedderBtn1.innerText = "הגימטריה בכתובים";
             hedderBtn2.innerText = "המילים בכתובים";
             hedderBtn3.innerText = 'פסוקים לש"א בכתובים';
