@@ -127,10 +127,18 @@ table {
     top: 0;
 }
 
-.pading-2 {
+.padding-4 {
     padding-top: 4vh;
+}
+
+.padding-bottom-4 {
+    padding-bottom: 4vh;
 }
 
 .light-blue {
     background-color: #788af0;
+}
+
+.hide {
+    display: none;
 }
