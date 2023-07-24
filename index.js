@@ -32,9 +32,9 @@ function main() {
             break;
         default:
             obj = objTora;
+            hedderBtn1.innerText = "הגימטריה בתורה";
             hedderBtn2.innerText = "המילים בתורה";
-            hedderBtn3.innerText = "פסוקים לשמות אנשים בתורה";
-
+            hedderBtn3.innerText = 'פסוקים לש"א בכתובים';
             break;
     }
 
@@ -78,11 +78,30 @@ function setHistory(sum, value) {
 
 function setOption(value) {
     option = value;
+    // const hedderBtn1 = document.getElementById("btn1");
+    // const hedderBtn2 = document.getElementById("btn2");
+    // const hedderBtn3 = document.getElementById("btn3");
+    // const buttons = [hedderBtn1, hedderBtn2, hedderBtn3];
+    // setColorButtons(value, buttons);
     main();
+}
+
+function setColorButtons(source, buttons) {
+
+    let nonSelects = [1, 2, 3].filter(num => num != source);
+    nonSelects.forEach(num => {
+        buttons[num - 1].classList.remove("light-blue");
+    });
+    buttons[source - 1].classList.add("light-blue");
 }
 
 function setSource(value) {
     source = value;
+    // const hedderBtn1 = document.getElementById("hedderBtn1");
+    // const hedderBtn2 = document.getElementById("hedderBtn2");
+    // const hedderBtn3 = document.getElementById("hedderBtn3");
+    // const buttons = [hedderBtn1, hedderBtn2, hedderBtn3];
+    // setColorButtons(source, buttons);
     main();
 }
 
