@@ -5,6 +5,8 @@ let source = 1;
 
 async function main() {
     const value = document.getElementById("chars").value;
+    const sum = calculate(value);
+    document.getElementById('sum').innerText = sum;
     const hedderBtn1 = document.getElementById("hedderBtn1");
     const hedderBtn2 = document.getElementById("hedderBtn2");
     const hedderBtn3 = document.getElementById("hedderBtn3");
@@ -44,7 +46,7 @@ async function main() {
 
     switch (option) {
         case 1:
-            setGematrya(value, obj, objSource);
+            setGematrya(value, sum, obj, objSource);
             break;
         case 2:
             setListOfSameInTora(obj, value);
@@ -59,16 +61,14 @@ async function main() {
 }
 
 
-function setGematrya(value, obj, objSource) {
+function setGematrya(value, sum, obj, objSource) {
     document.getElementById("subject").innerText = "מילים בתורה עם אותה גימטריה";
-    const sum = calculate(value);
-    setHistory(sum, value);
+    //setHistory(sum, value);
     setGematriaRows(sum, obj, objSource)
 }
 
 function setHistory(sum, value) {
     let history = [];
-    document.getElementById('sum').innerText = sum;
     localStorage.getItem('history') ? history = localStorage.getItem('history').split('%%') : [];
     history = history.filter((v, i) => history.indexOf(v) === i).sort();
     document.getElementById('history').innerText = history.filter(e => calculate(e) == sum && e != value);
@@ -82,11 +82,11 @@ function setHistory(sum, value) {
 
 function setOption(value) {
     option = value;
-    // const hedderBtn1 = document.getElementById("btn1");
-    // const hedderBtn2 = document.getElementById("btn2");
-    // const hedderBtn3 = document.getElementById("btn3");
-    // const buttons = [hedderBtn1, hedderBtn2, hedderBtn3];
-    // setColorButtons(value, buttons);
+    const hedderBtn1 = document.getElementById("hedderBtn1");
+    const hedderBtn2 = document.getElementById("hedderBtn2");
+    const hedderBtn3 = document.getElementById("hedderBtn3");
+    const buttons = [hedderBtn1, hedderBtn2, hedderBtn3];
+    setColorButtons(value, buttons);
     main();
 }
 
@@ -94,6 +94,10 @@ function setColorButtons(source, buttons) {
 
     let nonSelects = [1, 2, 3].filter(num => num != source);
     nonSelects.forEach(num => {
+        // const button = buttons[num - 1];
+        // if (button) {
+        //     button.classList.remove("light-blue");
+        // }
         buttons[num - 1].classList.remove("light-blue");
     });
     buttons[source - 1].classList.add("light-blue");
@@ -101,11 +105,11 @@ function setColorButtons(source, buttons) {
 
 function setSource(value) {
     source = value;
-    // const hedderBtn1 = document.getElementById("hedderBtn1");
-    // const hedderBtn2 = document.getElementById("hedderBtn2");
-    // const hedderBtn3 = document.getElementById("hedderBtn3");
-    // const buttons = [hedderBtn1, hedderBtn2, hedderBtn3];
-    // setColorButtons(source, buttons);
+    const hedderBtn1 = document.getElementById("btn1");
+    const hedderBtn2 = document.getElementById("btn2");
+    const hedderBtn3 = document.getElementById("btn3");
+    const buttons = [hedderBtn1, hedderBtn2, hedderBtn3];
+    setColorButtons(source, buttons);
     main();
 }
 
@@ -143,7 +147,7 @@ function clean(word) {
 }
 
 function setListOfSameInTora(obj, value) {
-    document.getElementById("subject").innerText = "המילים האלו כתובים בתורה כאן";
+    document.getElementById("subject").innerText = "מקומות שכתובים שם המילה או המילים שהזנת";
     const listOfSamePesukim = [];
     for (const [k, v] of Object.entries(obj)) {
         const seferName = k;
@@ -185,7 +189,6 @@ function setListOfSameInTora(obj, value) {
 }
 
 function CheckAgainThoroughly(pasuk, value) {
-    debugger;
     const chars = pasuk.split('');
     const start = focusToStart(pasuk, value);
     let same = chars[start];
