@@ -149,13 +149,13 @@ function clean(word) {
 function setListOfSameInTora(obj, value) {
     document.getElementById("subject").innerText = "מקומות שכתובים שם המילה או המילים שהזנת";
     const listOfSamePesukim = [];
+    if (value.includes(" ")) {
+        value = value.replaceAll(/\s+/g, "");
+    }
     for (const [k, v] of Object.entries(obj)) {
         const seferName = k;
         v.forEach((perek, indexPerek) => {
             perek.forEach((pasuk, indexPasuk) => {
-                if (value.includes(" ")) {
-                    value = value.replaceAll(/\s+/g, "");
-                }
                 if (value.length && rejects(pasuk).includes(value)) {
                     // debugger;
                     const mainWords = [];
