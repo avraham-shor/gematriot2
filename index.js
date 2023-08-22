@@ -10,37 +10,49 @@ async function main() {
     const hedderBtn1 = document.getElementById("hedderBtn1");
     const hedderBtn2 = document.getElementById("hedderBtn2");
     const hedderBtn3 = document.getElementById("hedderBtn3");
+    const hedderBtn4 = document.getElementById("hedderBtn4");
     let obj = {};
     let objSource = {};
+    let objRoshei = {};
     switch (source) {
         case 1:
             obj = gemTora;
             objSource = await gemSourceTora || {};
+            objRoshei = gemRoshei['tora'] || {};
             hedderBtn1.innerText = "הגימטריה בתורה";
             hedderBtn2.innerText = "המילים בתורה";
             hedderBtn3.innerText = 'פסוקים לש"א בתורה';
+            hedderBtn4.innerText = 'ר"ת בתורה';
             break;
         case 2:
             obj = gemNevihim;
             objSource = await gemSourceNevihim || {};
+            objRoshei = gemRoshei['nevihim'] || {};
             hedderBtn1.innerText = "הגימטריה בנביאים";
             hedderBtn2.innerText = "המילים בנביאים";
             hedderBtn3.innerText = 'פסוקים לש"א בנביאים';
+            hedderBtn4.innerText = 'ר"ת בנביאים';
+
 
             break;
         case 3:
             obj = gemCetuvim;
             objSource = await gemSourceCetuvim || {};
+            objRoshei = gemRoshei['cetuvim'] || {};
             hedderBtn1.innerText = "הגימטריה בכתובים";
             hedderBtn2.innerText = "המילים בכתובים";
             hedderBtn3.innerText = 'פסוקים לש"א בכתובים';
+            hedderBtn4.innerText = 'ר"ת בכתובים';
+
 
             break;
         default:
-            obj = objTora;
+            obj = gemTora;
             hedderBtn1.innerText = "הגימטריה בתורה";
             hedderBtn2.innerText = "המילים בתורה";
-            hedderBtn3.innerText = 'פסוקים לש"א בכתובים';
+            hedderBtn3.innerText = 'פסוקים לש"א בתורה';
+            hedderBtn4.innerText = 'ר"ת בתורה';
+
             break;
     }
 
@@ -53,6 +65,9 @@ async function main() {
             break;
         case 3:
             setPesukimForPeopleNames(obj, value)
+            break;
+        case 4:
+            setRosheiTeivot(value, obj, objRoshei)
             break;
         default:
             setGematrya(value)
@@ -85,14 +100,14 @@ function setOption(value) {
     const hedderBtn1 = document.getElementById("hedderBtn1");
     const hedderBtn2 = document.getElementById("hedderBtn2");
     const hedderBtn3 = document.getElementById("hedderBtn3");
-    const buttons = [hedderBtn1, hedderBtn2, hedderBtn3];
+    const hedderBtn4 = document.getElementById("hedderBtn4");
+    const buttons = [hedderBtn1, hedderBtn2, hedderBtn3, hedderBtn4];
     setColorButtons(value, buttons);
     main();
 }
 
 function setColorButtons(source, buttons) {
-
-    let nonSelects = [1, 2, 3].filter(num => num != source);
+    let nonSelects = getArrRange(1, buttons.length).filter(num => num != source);
     nonSelects.forEach(num => {
         // const button = buttons[num - 1];
         // if (button) {
@@ -118,8 +133,8 @@ function addIndexInHebrew(index) {
     const some = index % 10;
     const tens = index % 100 - some;
     const hundreds = index - tens - some;
-    console.log(hundreds, tens, some);
-    console.log(VAL_OBVERSE[hundreds] + VAL_OBVERSE[tens] + VAL_OBVERSE[some]);
+    // console.log(hundreds, tens, some);
+    // console.log(VAL_OBVERSE[hundreds] + VAL_OBVERSE[tens] + VAL_OBVERSE[some]);
     return ' ' + VAL_OBVERSE[hundreds] + VAL_OBVERSE[tens] + VAL_OBVERSE[some];
 
 }
@@ -146,7 +161,13 @@ function clean(word) {
     }
 }
 
+function getArrRange(start, end) {
+    return Array.apply(0, Array(end))
+      .map((element, index) => index + start);
+  }
+
 function setListOfSameInTora(obj, value) {
+
     document.getElementById("subject").innerText = "מקומות שכתובים שם המילה או המילים שהזנת";
     const listOfSamePesukim = [];
     if (value.includes(" ")) {
@@ -177,7 +198,7 @@ function setListOfSameInTora(obj, value) {
                         const arr = pasuk.split(selectWords);
                         const rightOfPasuk = arr[0];
                         const leftOfPasuk = arr[1];
-                        listOfSamePesukim.push([rightOfPasuk, selectWords, leftOfPasuk, seferName + " " + addIndexInHebrew(indexPerek + 1) + addIndexInHebrew(indexPasuk + 1)]);
+                       
                     }
 
                 }
@@ -261,6 +282,69 @@ function setGematriaRows(sum, obj, objSource) {
     }
 
     fillTable(listOfRows);
+}
+
+function setRosheiTeivot(value, obj, objRoshei) {
+    const listOfRosheiTeivot = [];
+    if (value.includes(" ")) {
+        value = value.replaceAll(/\s+/g, "");
+    }
+    document.getElementById("subject").innerText = "מילים המתחילות עם האותיות האלו";
+    for (const [k, v] of Object.entries(objRoshei)) {
+        const seferName = k;
+        const seferRoshei = v;
+        // console.log(seferRoshei);
+        seferRoshei.forEach((perekRoshei, indexPerek) => {
+            if (perekRoshei.includes(value)) {
+                let numWordsBefore = perekRoshei.split(value)[0].length;
+                let selectWords = "";
+                let right;
+                let left;
+                console.log(seferName, indexPerek);
+                valueLength = value.length;
+                let pasukIndex;
+                let lastPasukIndex;
+                // console.log(perekRoshei);
+                obj[seferName][indexPerek].forEach((pasuk, index) => {
+                    wordsOfPasuk = pasuk.replaceAll("־"," ").split(" ").filter(word => word.length);
+
+                    if (wordsOfPasuk.length <= numWordsBefore) {
+                        numWordsBefore -= wordsOfPasuk.length
+                    }
+                    else {
+                        let end;
+                        if (!pasukIndex) {
+                            pasukIndex = addIndexInHebrew(index + 1);
+                        }
+                        if (wordsOfPasuk.length - numWordsBefore > valueLength) {
+                         end = numWordsBefore + valueLength; 
+                        }
+                        if (valueLength > 0) {
+                            if (!right) {
+                                right = wordsOfPasuk.slice(0, numWordsBefore +1).join(" ") + " ";
+                            }
+                            if (end) {
+                                left = " " + wordsOfPasuk.slice(end).join(" ");
+                            }
+                            wordsOfPasuk = wordsOfPasuk.slice(numWordsBefore, end);
+                            
+                        valueLength -= wordsOfPasuk.length;
+                        selectWords += wordsOfPasuk.join(" ");
+                        numWordsBefore = 0;
+                        lastPasukIndex = " - " + addIndexInHebrew(index + 1);
+                        }
+                        
+                    }
+                })
+                listOfRosheiTeivot.push([right, selectWords, left, seferName + " " + addIndexInHebrew(indexPerek + 1) + pasukIndex + lastPasukIndex]);
+            }
+        });
+    }
+    if (!listOfRosheiTeivot.length) {
+        listOfRosheiTeivot.push(['', 'אין פסוקים', '', 'אין מקורות']);
+    }
+
+    fillTable(listOfRosheiTeivot);
 }
 
 function getPasukBySource(obj, seferName, perek, pasuk, start, end) {

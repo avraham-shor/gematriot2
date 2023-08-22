@@ -116,7 +116,11 @@ table {
 .with25 {
     width: 25vw;
     font-size: 3rem;
+}
 
+.with18 {
+    width: 18vw;
+    font-size: 2.4rem;
 }
 
 .logo {
