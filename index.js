@@ -135,7 +135,7 @@ function addIndexInHebrew(index) {
     const hundreds = index - tens - some;
     // console.log(hundreds, tens, some);
     // console.log(VAL_OBVERSE[hundreds] + VAL_OBVERSE[tens] + VAL_OBVERSE[some]);
-    return ' ' + VAL_OBVERSE[hundreds] + VAL_OBVERSE[tens] + VAL_OBVERSE[some];
+    return (' ' + VAL_OBVERSE[hundreds] + VAL_OBVERSE[tens] + VAL_OBVERSE[some]).replace("יה","טו").replace("יו","טז");
 
 }
 
@@ -304,6 +304,7 @@ function setRosheiTeivot(value, obj, objRoshei) {
                 valueLength = value.length;
                 let pasukIndex;
                 let lastPasukIndex;
+                let firstIndex;
                 // console.log(perekRoshei);
                 obj[seferName][indexPerek].forEach((pasuk, index) => {
                     wordsOfPasuk = pasuk.replaceAll("־"," ").split(" ").filter(word => word.length);
@@ -316,12 +317,15 @@ function setRosheiTeivot(value, obj, objRoshei) {
                         if (!pasukIndex) {
                             pasukIndex = addIndexInHebrew(index + 1);
                         }
+                        if (!firstIndex) {
+                           firstIndex = index; 
+                        }
                         if (wordsOfPasuk.length - numWordsBefore > valueLength) {
                          end = numWordsBefore + valueLength; 
                         }
                         if (valueLength > 0) {
                             if (!right) {
-                                right = wordsOfPasuk.slice(0, numWordsBefore +1).join(" ") + " ";
+                                right = wordsOfPasuk.slice(0, numWordsBefore).join(" ") + " ";
                             }
                             if (end) {
                                 left = " " + wordsOfPasuk.slice(end).join(" ");
@@ -331,7 +335,7 @@ function setRosheiTeivot(value, obj, objRoshei) {
                         valueLength -= wordsOfPasuk.length;
                         selectWords += wordsOfPasuk.join(" ");
                         numWordsBefore = 0;
-                        lastPasukIndex = " - " + addIndexInHebrew(index + 1);
+                        lastPasukIndex = index != firstIndex? " - " + addIndexInHebrew(index + 1) : "";
                         }
                         
                     }
