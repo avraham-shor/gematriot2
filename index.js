@@ -291,7 +291,8 @@ function setRosheiTeivot(value, obj, objRoshei) {
     .replaceAll("ן", "נ").replaceAll("ף", "פ").replaceAll("ץ", "צ");
 
     document.getElementById("subject").innerText = "מילים המתחילות עם האותיות האלו";
-    for (const [k, v] of Object.entries(objRoshei)) {
+    if (value.length) {
+        for (const [k, v] of Object.entries(objRoshei)) {
         const seferName = k;
         const seferRoshei = v;
         // console.log(seferRoshei);
@@ -344,9 +345,10 @@ function setRosheiTeivot(value, obj, objRoshei) {
                 listOfRosheiTeivot.push([right, selectWords, left, seferName + " " + addIndexInHebrew(indexPerek + 1) + pasukIndex + lastPasukIndex]);
             }
         });
+     }
     }
     if (!listOfRosheiTeivot.length) {
-        listOfRosheiTeivot.push(['', 'אין פסוקים', '', 'אין מקורות']);
+        listOfRosheiTeivot.push(['', 'אין מילים המתחילות עם האותיות האלו', '', 'אין מקורות']);
     }
 
     fillTable(listOfRosheiTeivot);
