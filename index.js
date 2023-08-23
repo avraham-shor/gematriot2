@@ -286,9 +286,10 @@ function setGematriaRows(sum, obj, objSource) {
 
 function setRosheiTeivot(value, obj, objRoshei) {
     const listOfRosheiTeivot = [];
-    if (value.includes(" ")) {
-        value = value.replaceAll(/\s+/g, "");
-    }
+    // Replace the endChars to simple chars.
+    value = value.replaceAll(/\s+/g, "").replaceAll("ך", "כ").replaceAll("ם", "מ")
+    .replaceAll("ן", "נ").replaceAll("ף", "פ").replaceAll("ץ", "צ");
+
     document.getElementById("subject").innerText = "מילים המתחילות עם האותיות האלו";
     for (const [k, v] of Object.entries(objRoshei)) {
         const seferName = k;
@@ -333,7 +334,7 @@ function setRosheiTeivot(value, obj, objRoshei) {
                             wordsOfPasuk = wordsOfPasuk.slice(numWordsBefore, end);
                             
                         valueLength -= wordsOfPasuk.length;
-                        selectWords += wordsOfPasuk.join(" ");
+                        selectWords += wordsOfPasuk.join(" ") + " ";
                         numWordsBefore = 0;
                         lastPasukIndex = index != firstIndex? " - " + addIndexInHebrew(index + 1) : "";
                         }
