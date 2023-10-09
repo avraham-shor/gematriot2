@@ -96,6 +96,7 @@ function setHistory(sum, value) {
 }
 
 function setOption(value) {
+    debugger;
     option = value;
     const hedderBtn1 = document.getElementById("hedderBtn1");
     const hedderBtn2 = document.getElementById("hedderBtn2");
@@ -198,7 +199,8 @@ function setListOfSameInTora(obj, value) {
                         const arr = pasuk.split(selectWords);
                         const rightOfPasuk = arr[0];
                         const leftOfPasuk = arr[1];
-                       
+                        listOfSamePesukim.push([rightOfPasuk, selectWords, leftOfPasuk, seferName + " " + addIndexInHebrew(indexPerek + 1) + addIndexInHebrew(indexPasuk + 1)]);
+
                     }
 
                 }
