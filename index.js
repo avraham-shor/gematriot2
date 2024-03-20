@@ -96,7 +96,7 @@ function setHistory(sum, value) {
 }
 
 function setOption(value) {
-    debugger;
+    // debugger;
     option = value;
     const hedderBtn1 = document.getElementById("hedderBtn1");
     const hedderBtn2 = document.getElementById("hedderBtn2");
@@ -184,15 +184,16 @@ function setListOfSameInTora(obj, value) {
                     const wordsOfPasuk = pasuk.split(" ");
                     for (let i = 0; i < wordsOfPasuk.length; i++) {
                         const word = wordsOfPasuk[i];
+                        const rejectedWord = rejects(word);
                         //check which words in the Pasuk are the same text
-                        if (value.includes(rejects(word)) && word.length) {
-                            //debugger;
+                        if (word.length && (value.includes(rejectedWord) || rejectedWord.includes(value))) {
+                            // debugger;
                             mainWords.push(word);
                         }
                         else if (mainWords.length) break;
                     }
-                    if (mainWords.length) {
-                        let selectWords = mainWords.join(" ");
+                    // if (mainWords.length) {
+                        let selectWords = mainWords && mainWords.join(" ") || "";
                         if (value != rejects(selectWords)) {
                             selectWords = CheckAgainThoroughly(pasuk, value);
                         }
@@ -201,7 +202,7 @@ function setListOfSameInTora(obj, value) {
                         const leftOfPasuk = arr[1];
                         listOfSamePesukim.push([rightOfPasuk, selectWords, leftOfPasuk, seferName + " " + addIndexInHebrew(indexPerek + 1) + addIndexInHebrew(indexPasuk + 1)]);
 
-                    }
+                    // }
 
                 }
             });
