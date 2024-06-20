@@ -4,6 +4,8 @@ let source = 1;
 
 
 async function main() {
+    // const o = await gemSofei;
+    // console.log("gemSofey:",o.tora.בראשית[0]);
     const value = document.getElementById("chars").value;
     const sum = calculate(value);
     document.getElementById('sum').innerText = sum;
@@ -14,11 +16,13 @@ async function main() {
     let obj = {};
     let objSource = {};
     let objRoshei = {};
+    let objSofei = {};
     switch (source) {
         case 1:
             obj = gemTora;
             objSource = await gemSourceTora || {};
             objRoshei = gemRoshei['tora'] || {};
+            objSofei = gemSofei['tora'] || {};
             hedderBtn1.innerText = "הגימטריה בתורה";
             hedderBtn2.innerText = "המילים בתורה";
             hedderBtn3.innerText = 'פסוקים לש"א בתורה';
@@ -28,6 +32,7 @@ async function main() {
             obj = gemNevihim;
             objSource = await gemSourceNevihim || {};
             objRoshei = gemRoshei['nevihim'] || {};
+            objSofei = gemSofei['nevihim'] || {};
             hedderBtn1.innerText = "הגימטריה בנביאים";
             hedderBtn2.innerText = "המילים בנביאים";
             hedderBtn3.innerText = 'פסוקים לש"א בנביאים';
@@ -39,6 +44,7 @@ async function main() {
             obj = gemCetuvim;
             objSource = await gemSourceCetuvim || {};
             objRoshei = gemRoshei['cetuvim'] || {};
+            objSofei = gemSofei['cetuvim'] || {};
             hedderBtn1.innerText = "הגימטריה בכתובים";
             hedderBtn2.innerText = "המילים בכתובים";
             hedderBtn3.innerText = 'פסוקים לש"א בכתובים';
@@ -48,6 +54,9 @@ async function main() {
             break;
         default:
             obj = gemTora;
+            objSource = await gemSourceTora || {};
+            objRoshei = gemRoshei['tora'] || {};
+            objSofei = gemSofei['tora'] || {};
             hedderBtn1.innerText = "הגימטריה בתורה";
             hedderBtn2.innerText = "המילים בתורה";
             hedderBtn3.innerText = 'פסוקים לש"א בתורה';
@@ -69,6 +78,9 @@ async function main() {
         case 4:
             setRosheiTeivot(value, obj, objRoshei)
             break;
+        case 5:
+            setRosheiTeivot(value, obj, objSofei)
+            break;
         default:
             setGematrya(value)
             break;
@@ -77,6 +89,8 @@ async function main() {
 
 
 function setGematrya(value, sum, obj, objSource) {
+    // console.log('פסוקים:', obj['בראשית']);
+    // console.log('index 100', objSource[100]);
     document.getElementById("subject").innerText = "מילים בתורה עם אותה גימטריה";
     //setHistory(sum, value);
     setGematriaRows(sum, obj, objSource)
@@ -102,7 +116,9 @@ function setOption(value) {
     const hedderBtn2 = document.getElementById("hedderBtn2");
     const hedderBtn3 = document.getElementById("hedderBtn3");
     const hedderBtn4 = document.getElementById("hedderBtn4");
-    const buttons = [hedderBtn1, hedderBtn2, hedderBtn3, hedderBtn4];
+    const hedderBtn5 = document.getElementById("hedderBtn5");
+
+    const buttons = [hedderBtn1, hedderBtn2, hedderBtn3, hedderBtn4, hedderBtn5];
     setColorButtons(value, buttons);
     main();
 }
@@ -351,10 +367,80 @@ function setRosheiTeivot(value, obj, objRoshei) {
      }
     }
     if (!listOfRosheiTeivot.length) {
-        listOfRosheiTeivot.push(['', 'אין מילים המתחילות עם האותיות האלו', '', 'אין מקורות']);
+        listOfRosheiTeivot.push(['', 'אין מילים המסתיימות עם האותיות האלו', '', 'אין מקורות']);
     }
 
     fillTable(listOfRosheiTeivot);
+}
+
+function setSofeiTeivot(value, obj, objSofei) {
+    const listOfSofeiTeivot = [];
+    // Replace the endChars to simple chars.
+    value = value.replaceAll(/\s+/g, "").replaceAll("ך", "כ").replaceAll("ם", "מ")
+    .replaceAll("ן", "נ").replaceAll("ף", "פ").replaceAll("ץ", "צ");
+
+    document.getElementById("subject").innerText = "מילים המסתיימות עם האותיות האלו";
+    if (value.length) {
+        for (const [k, v] of Object.entries(objSofei)) {
+        const seferName = k;
+        const seferRoshei = v;
+        // console.log(seferRoshei);
+        seferRoshei.forEach((perekSofei, indexPerek) => {
+            if (perekSofei.includes(value)) {
+                let numWordsBefore = perekSofei.split(value)[0].length;
+                let selectWords = "";
+                let right;
+                let left;
+                console.log(seferName, indexPerek);
+                valueLength = value.length;
+                let pasukIndex;
+                let lastPasukIndex;
+                let firstIndex;
+                // console.log(perekSofei);
+                obj[seferName][indexPerek].forEach((pasuk, index) => {
+                    wordsOfPasuk = pasuk.replaceAll("־"," ").split(" ").filter(word => word.length);
+
+                    if (wordsOfPasuk.length <= numWordsBefore) {
+                        numWordsBefore -= wordsOfPasuk.length
+                    }
+                    else {
+                        let end;
+                        if (!pasukIndex) {
+                            pasukIndex = addIndexInHebrew(index + 1);
+                        }
+                        if (!firstIndex) {
+                           firstIndex = index; 
+                        }
+                        if (wordsOfPasuk.length - numWordsBefore > valueLength) {
+                         end = numWordsBefore + valueLength; 
+                        }
+                        if (valueLength > 0) {
+                            if (!right) {
+                                right = wordsOfPasuk.slice(0, numWordsBefore).join(" ") + " ";
+                            }
+                            if (end) {
+                                left = " " + wordsOfPasuk.slice(end).join(" ");
+                            }
+                            wordsOfPasuk = wordsOfPasuk.slice(numWordsBefore, end);
+                            
+                        valueLength -= wordsOfPasuk.length;
+                        selectWords += wordsOfPasuk.join(" ") + " ";
+                        numWordsBefore = 0;
+                        lastPasukIndex = index != firstIndex? " - " + addIndexInHebrew(index + 1) : "";
+                        }
+                        
+                    }
+                })
+                listOfSofeiTeivot.push([right, selectWords, left, seferName + " " + addIndexInHebrew(indexPerek + 1) + pasukIndex + lastPasukIndex]);
+            }
+        });
+     }
+    }
+    if (!listOfSofeiTeivot.length) {
+        listOfSofeiTeivot.push(['', 'אין מילים המתחילות עם האותיות האלו', '', 'אין מקורות']);
+    }
+
+    fillTable(listOfSofeiTeivot);
 }
 
 function getPasukBySource(obj, seferName, perek, pasuk, start, end) {
