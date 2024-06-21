@@ -79,7 +79,7 @@ async function main() {
             setRosheiTeivot(value, obj, objRoshei)
             break;
         case 5:
-            setRosheiTeivot(value, obj, objSofei)
+            setSofeiTeivot(value, obj, objSofei)
             break;
         default:
             setGematrya(value)
@@ -322,13 +322,13 @@ function setRosheiTeivot(value, obj, objRoshei) {
                 let right;
                 let left;
                 console.log(seferName, indexPerek);
-                valueLength = value.length;
+                let valueLength = value.length;
                 let pasukIndex;
                 let lastPasukIndex;
                 let firstIndex;
                 // console.log(perekRoshei);
                 obj[seferName][indexPerek].forEach((pasuk, index) => {
-                    wordsOfPasuk = pasuk.replaceAll("־"," ").split(" ").filter(word => word.length);
+                    wordsOfPasuk = pasuk.replaceAll("־"," ").replaceAll(" ׀","").split(" ").filter(word => word.length);
 
                     if (wordsOfPasuk.length <= numWordsBefore) {
                         numWordsBefore -= wordsOfPasuk.length
@@ -341,7 +341,7 @@ function setRosheiTeivot(value, obj, objRoshei) {
                         if (!firstIndex) {
                            firstIndex = index; 
                         }
-                        if (wordsOfPasuk.length - numWordsBefore > valueLength) {
+                        if (wordsOfPasuk.length - numWordsBefore >= valueLength) {
                          end = numWordsBefore + valueLength; 
                         }
                         if (valueLength > 0) {
@@ -392,13 +392,13 @@ function setSofeiTeivot(value, obj, objSofei) {
                 let right;
                 let left;
                 console.log(seferName, indexPerek);
-                valueLength = value.length;
+                let valueLength = value.length;
                 let pasukIndex;
                 let lastPasukIndex;
                 let firstIndex;
                 // console.log(perekSofei);
                 obj[seferName][indexPerek].forEach((pasuk, index) => {
-                    wordsOfPasuk = pasuk.replaceAll("־"," ").split(" ").filter(word => word.length);
+                    wordsOfPasuk = pasuk.replaceAll("־"," ").replaceAll(" ׀","").split(" ").filter(word => word.length);
 
                     if (wordsOfPasuk.length <= numWordsBefore) {
                         numWordsBefore -= wordsOfPasuk.length
@@ -411,7 +411,7 @@ function setSofeiTeivot(value, obj, objSofei) {
                         if (!firstIndex) {
                            firstIndex = index; 
                         }
-                        if (wordsOfPasuk.length - numWordsBefore > valueLength) {
+                        if (wordsOfPasuk.length - numWordsBefore >= valueLength) {
                          end = numWordsBefore + valueLength; 
                         }
                         if (valueLength > 0) {
