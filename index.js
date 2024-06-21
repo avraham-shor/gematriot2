@@ -328,7 +328,7 @@ function setRosheiTeivot(value, obj, objRoshei) {
                 let firstIndex;
                 // console.log(perekRoshei);
                 obj[seferName][indexPerek].forEach((pasuk, index) => {
-                    wordsOfPasuk = pasuk.replaceAll("־"," ").replaceAll(" ׀","").split(" ").filter(word => word.length);
+                    wordsOfPasuk = pasuk.replaceAll("־"," ").split(" ").filter(word => word.length);
 
                     if (wordsOfPasuk.length <= numWordsBefore) {
                         numWordsBefore -= wordsOfPasuk.length
@@ -367,7 +367,7 @@ function setRosheiTeivot(value, obj, objRoshei) {
      }
     }
     if (!listOfRosheiTeivot.length) {
-        listOfRosheiTeivot.push(['', 'אין מילים המסתיימות עם האותיות האלו', '', 'אין מקורות']);
+        listOfRosheiTeivot.push(['', 'אין מילים המתחילות עם האותיות האלו', '', 'אין מקורות']);
     }
 
     fillTable(listOfRosheiTeivot);
@@ -437,7 +437,7 @@ function setSofeiTeivot(value, obj, objSofei) {
      }
     }
     if (!listOfSofeiTeivot.length) {
-        listOfSofeiTeivot.push(['', 'אין מילים המתחילות עם האותיות האלו', '', 'אין מקורות']);
+        listOfSofeiTeivot.push(['', 'אין מילים המסתיימות עם האותיות האלו', '', 'אין מקורות']);
     }
 
     fillTable(listOfSofeiTeivot);
