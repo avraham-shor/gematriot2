@@ -1,73 +1,247 @@
 <!DOCTYPE html>
-<html lang="en" dir="rtl">
+<html lang="he" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gematrya</title>
+    <title>גימטריא+ - כלי ללימוד גימטריה</title>
     <link rel="icon" type="image/x-icon" href="./favicon.ico">
     <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <img class="logo" src="./1687348105683.png">
-    <header>
-        גימטריא+
-    </header>
-    <div class="descriptipon">
-     הכנס מילה או כמה מילים כדי לראות את הגימטריה ולראות היכן זה כתוב בתורה וכן למצוא היכן יש גימטריה דומה בתנ"ך.
-    </div>
-    <div>
-        <input type="text" id="chars" placeholder="הכנס כאן את המילה / מילים" class="input">
-    </div>
-    <div class="buttons-box padding-4 padding-bottom-4">
-        <button class="button-9 with25" role="button"  id="btn1" onclick="setSource(1)"> תורה </button>
-        <button class="button-9 with25" role="button"  id="btn2" onclick="setSource(2)"> נביאים </button>
-        <button class="button-9 with25" role="button"  id="btn3" onclick="setSource(3)"> כתובים </button>
-    </div>
-    <div class="buttons-box padding-bottom-4">
-        <button class="button-9 with15" role="button" id="hedderBtn1" onclick="setOption(1)">הגימטריא בתנ"ך </button>
-        <button class="button-9 with15" role="button" id="hedderBtn2" onclick="setOption(2)"> המילים בתנ"ך </button>
-        <button class="button-9 with15" role="button" id="hedderBtn3" onclick="setOption(3)" > פסוקים לשמות אנשים </button>
-        <button class="button-9 with15" role="button" id="hedderBtn4" onclick="setOption(4)" >  ראשי תיבות </button>
-        <button class="button-9 with15" role="button" id="hedderBtn5" onclick="setOption(5)" >  סופי תיבות </button>
-    </div>
-    <div>
-        <h1 id="sum" style="font-size: 5rem;"></h1>
-        <div class="hide">
-            <h1 class="descriptipon">מילים שחיפשת בעבר עם אותה גימטריה:</h1>
-            <h1 id="history" style="font-size: 3rem;"></h1>
-        </div>
-        
-        <div class="table-box">
-            <table border="1" id="table">
-                <tr>
-                    <th></th>
-                    <th>מקורם בתורה</th>
-                    <th id="subject"></th>
-                </tr>
-                <tr>
-                    <td>0</td>
-                    <td>אין מקורות</td>
-                    <td class="pesukim">אין פסוקים</td>
-                </tr>
-            </table>
-        </div>
+    <div class="container">
+        <!-- Header Section -->
+        <header class="main-header">
+            <!-- <div class="logo-container">
+                <img class="logo" src="./1687348105683.png" alt="גימטריא+ לוגו">
+            </div> -->
+            <h1 class="site-title">גימטריא+</h1>
+            <p class="site-subtitle">כלי מתקדם ללימוד גימטריה וחקר התנ"ך</p>
+        </header>
 
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Search Section -->
+            <section class="search-section">
+                <div class="search-container">
+                    <div class="input-group">
+                        <input type="text" id="chars" placeholder="הכנס מילה או מילים לחיפוש..." class="search-input">
+                        <button class="search-button" id="searchBtn" onclick="performSearch()">
+                            <span class="search-icon">🔍</span>
+                            <span class="search-text">חפש</span>
+                        </button>
+                    </div>
+                    <p class="search-hint">לחץ Enter או על כפתור החיפוש כדי להתחיל</p>
+                </div>
+            </section>
+
+            <!-- Source Selection -->
+            <section class="source-section">
+                <h2 class="section-title">בחר מקור</h2>
+                <div class="button-grid source-grid">
+                    <button class="source-btn active" id="btn1" onclick="setSource(1)">
+                        <span class="btn-icon">📜</span>
+                        <span class="btn-text">תורה</span>
+                    </button>
+                    <button class="source-btn" id="btn2" onclick="setSource(2)">
+                        <span class="btn-icon">📖</span>
+                        <span class="btn-text">נביאים</span>
+                    </button>
+                    <button class="source-btn" id="btn3" onclick="setSource(3)">
+                        <span class="btn-icon">📚</span>
+                        <span class="btn-text">כתובים</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Search Options -->
+            <section class="options-section">
+                <h2 class="section-title">בחר סוג חיפוש</h2>
+                <div class="button-grid options-grid">
+                    <button class="option-btn active" id="hedderBtn1" onclick="setOption(1)">
+                        <span class="btn-icon">🔢</span>
+                        <span class="btn-text">גימטריה</span>
+                    </button>
+                    <button class="option-btn" id="hedderBtn2" onclick="setOption(2)">
+                        <span class="btn-icon">📝</span>
+                        <span class="btn-text">מילים</span>
+                    </button>
+                    <button class="option-btn" id="hedderBtn3" onclick="setOption(3)">
+                        <span class="btn-icon">👤</span>
+                        <span class="btn-text">שמות אנשים</span>
+                    </button>
+                    <button class="option-btn" id="hedderBtn4" onclick="setOption(4)">
+                        <span class="btn-icon">🔤</span>
+                        <span class="btn-text">ראשי תיבות</span>
+                    </button>
+                    <button class="option-btn" id="hedderBtn5" onclick="setOption(5)">
+                        <span class="btn-icon">🔤</span>
+                        <span class="btn-text">סופי תיבות</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section">
+                <!-- Gematria Value Display -->
+                <div class="gematria-display" id="gematriaDisplay">
+                    <div class="gematria-value">
+                        <span class="value-label">ערך גימטריה:</span>
+                        <span class="value-number" id="sum">-</span>
+                    </div>
+                </div>
+
+                <!-- History Section -->
+                <div class="history-section hide" id="historySection">
+                    <h3 class="history-title">מילים דומות מההיסטוריה:</h3>
+                    <div class="history-content" id="history">אין מילים בהיסטוריה</div>
+                </div>
+
+                <!-- Results Table -->
+                <div class="results-container">
+                    <div class="table-wrapper">
+                        <table class="results-table" id="table">
+                            <thead>
+                                <tr>
+                                    <th class="col-number">#</th>
+                                    <th class="col-source">מקור</th>
+                                    <th class="col-content" id="subject">תוכן</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="no-results">
+                                    <td>1</td>
+                                    <td>אין מקורות</td>
+                                    <td class="pesukim">אין פסוקים</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="main-footer">
+            <p>גימטריא+ - כלי ללימוד גימטריה וחקר התנ"ך</p>
+        </footer>
     </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>מחפש...</p>
+        </div>
+    </div>
+
+    <!-- Core scripts loaded immediately -->
     <script src="configuration.js"></script>
     <script src="index.js"></script>
+    
+    <!-- Torah data loaded immediately (default source) -->
     <script src="gem-tora.js"></script>
-    <script src="gem-nevihim.js"></script>
-    <script src="gem-cetuvim.js"></script>
     <script src="gem-tora-source.js"></script>
-    <script src="gem-nevihim-source.js"></script>
-    <script src="gem-cetuvim-source.js"></script>
     <script src="gem-roshei.js"></script>
     <script src="gem-sofei.js"></script>
-
-
+    
+    <!-- Other sources loaded asynchronously -->
+    <script>
+        // Global variables to track loading state
+        window.dataLoaded = {
+            tora: false,
+            nevihim: false,
+            cetuvim: false
+        };
+        
+        // Initialize with Torah data
+        document.addEventListener('DOMContentLoaded', function() {
+            window.dataLoaded.tora = true;
+        });
+        
+        // Function to load data files asynchronously
+        function loadScriptAsync(src, onLoad) {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = src;
+                script.onload = () => {
+                    if (onLoad) onLoad();
+                    resolve();
+                };
+                script.onerror = reject;
+                document.head.appendChild(script);
+            });
+        }
+        
+        // Load Nevi'im data when needed
+        async function loadNevihimData() {
+            if (window.dataLoaded.nevihim) return;
+            
+            showNotification('טוען נתוני נביאים...', 'info');
+            try {
+                await loadScriptAsync('gem-nevihim.js');
+                await loadScriptAsync('gem-nevihim-source.js');
+                window.dataLoaded.nevihim = true;
+                showNotification('נתוני נביאים נטענו בהצלחה', 'success');
+            } catch (error) {
+                console.error('Failed to load Nevi\'im data:', error);
+                showNotification('שגיאה בטעינת נתוני נביאים', 'error');
+            }
+        }
+        
+        // Load Ketuvim data when needed
+        async function loadCetuvimData() {
+            if (window.dataLoaded.cetuvim) return;
+            
+            showNotification('טוען נתוני כתובים...', 'info');
+            try {
+                await loadScriptAsync('gem-cetuvim.js');
+                await loadScriptAsync('gem-cetuvim-source.js');
+                window.dataLoaded.cetuvim = true;
+                showNotification('נתוני כתובים נטענו בהצלחה', 'success');
+            } catch (error) {
+                console.error('Failed to load Ketuvim data:', error);
+                showNotification('שגיאה בטעינת נתוני כתובים', 'error');
+            }
+        }
+        
+        // Override setSource to load data on demand
+        const originalSetSource = window.setSource;
+        window.setSource = function(value) {
+            // Load data if needed
+            if (value === 2 && !window.dataLoaded.nevihim) {
+                loadNevihimData();
+            } else if (value === 3 && !window.dataLoaded.cetuvim) {
+                loadCetuvimData();
+            }
+            
+            // Call original function
+            originalSetSource(value);
+        };
+        
+        // Preload data on hover for better UX
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn2 = document.getElementById('btn2');
+            const btn3 = document.getElementById('btn3');
+            
+            // Preload Nevi'im data on hover
+            btn2.addEventListener('mouseenter', function() {
+                if (!window.dataLoaded.nevihim) {
+                    loadNevihimData();
+                }
+            });
+            
+            // Preload Ketuvim data on hover
+            btn3.addEventListener('mouseenter', function() {
+                if (!window.dataLoaded.cetuvim) {
+                    loadCetuvimData();
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
